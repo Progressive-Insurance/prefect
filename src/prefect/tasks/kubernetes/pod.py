@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 from typing import Any, cast, Callable
 
 from kubernetes import client
 from kubernetes.stream import stream
 from kubernetes.watch import Watch
 from kubernetes.client.rest import ApiException
+=======
+from typing import Any, cast
+
+from kubernetes import client
+>>>>>>> prefect clone
 
 from prefect import Task
 from prefect.utilities.tasks import defaults_from_attrs
@@ -574,6 +580,7 @@ class ReplaceNamespacedPod(Task):
         api_client.replace_namespaced_pod(
             name=pod_name, namespace=namespace, body=body, **kube_kwargs
         )
+<<<<<<< HEAD
 
 
 class ReadNamespacedPodLogs(Task):
@@ -804,3 +811,5 @@ class ConnectGetNamespacedPodExec(Task):
             **kube_kwargs
         )
         return api_response
+=======
+>>>>>>> prefect clone

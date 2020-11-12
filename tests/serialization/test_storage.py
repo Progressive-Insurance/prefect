@@ -1,28 +1,47 @@
 import json
 import os
+<<<<<<< HEAD
+=======
+import socket
+>>>>>>> prefect clone
 import tempfile
 
 import pytest
 
 import prefect
+<<<<<<< HEAD
 from prefect import storage
 from prefect.serialization.storage import (
     AzureSchema,
+=======
+from prefect.environments import storage
+from prefect.serialization.storage import (
+    AzureSchema,
+    BaseStorageSchema,
+>>>>>>> prefect clone
     DockerSchema,
     GCSSchema,
     LocalSchema,
     S3Schema,
     WebhookSchema,
+<<<<<<< HEAD
     GitHubSchema,
     GitLabSchema,
     BitbucketSchema,
+=======
+    GitLabSchema,
+>>>>>>> prefect clone
 )
 
 
 def test_all_storage_subclasses_have_schemas():
     "Test that ensures we don't forget to include a Schema for every subclass we implement"
 
+<<<<<<< HEAD
     subclasses = {c.__name__ for c in storage.Storage.__subclasses__()}
+=======
+    subclasses = set(c.__name__ for c in storage.Storage.__subclasses__())
+>>>>>>> prefect clone
     subclasses.add(storage.Storage.__name__)  # add base storage, not a subclass
     schemas = set(prefect.serialization.storage.StorageSchema().type_schemas.keys())
     assert subclasses == schemas
@@ -233,12 +252,20 @@ def test_local_empty_serialize():
 def test_local_roundtrip():
     with tempfile.TemporaryDirectory() as tmpdir:
         s = storage.Local(directory=tmpdir, secrets=["AUTH"])
+<<<<<<< HEAD
         s.add_flow(prefect.Flow("test"))
+=======
+        flow_loc = s.add_flow(prefect.Flow("test"))
+>>>>>>> prefect clone
         serialized = LocalSchema().dump(s)
         deserialized = LocalSchema().load(serialized)
 
         assert "test" in deserialized
+<<<<<<< HEAD
         runner = deserialized.get_flow("test")
+=======
+        runner = deserialized.get_flow(flow_loc)
+>>>>>>> prefect clone
 
     assert runner.run().is_successful()
     assert deserialized.secrets == ["AUTH"]
@@ -330,7 +357,11 @@ def test_webhook_full_serialize():
         secrets=["CREDS"],
     )
     f = prefect.Flow("test")
+<<<<<<< HEAD
     webhook.add_flow(f)
+=======
+    webhook.flows["test"] = "key"
+>>>>>>> prefect clone
 
     serialized = WebhookSchema().dump(webhook)
 
@@ -356,6 +387,7 @@ def test_webhook_full_serialize():
     assert serialized["stored_as_script"] is False
 
 
+<<<<<<< HEAD
 @pytest.mark.parametrize("ref", [None, "testref"])
 def test_github_serialize(ref):
     github = storage.GitHub(repo="test/repo", path="flow.py")
@@ -369,6 +401,8 @@ def test_github_serialize(ref):
     assert serialized["secrets"] == []
 
 
+=======
+>>>>>>> prefect clone
 def test_gitlab_empty_serialize():
     gitlab = storage.GitLab(repo="test/repo")
     serialized = GitLabSchema().dump(gitlab)
@@ -396,6 +430,7 @@ def test_gitlab_full_serialize():
     assert serialized["path"] == "path/to/flow.py"
     assert serialized["ref"] == "test-branch"
     assert serialized["secrets"] == ["token"]
+<<<<<<< HEAD
 
 
 def test_bitbucket_empty_serialize():
@@ -429,3 +464,5 @@ def test_bitbucket_full_serialize():
     assert serialized["host"] == "http://localhost:7990"
     assert serialized["ref"] == "develop"
     assert serialized["secrets"] == ["token"]
+=======
+>>>>>>> prefect clone

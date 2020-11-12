@@ -66,20 +66,28 @@ def read_bytes_from_path(path: str) -> bytes:
         blob = bucket.get_blob(parsed.path.lstrip("/"))
         if blob is None:
             raise ValueError(f"Job template doesn't exist at {path}")
+<<<<<<< HEAD
         # Support GCS < 1.31
         return (
             blob.download_as_bytes()
             if hasattr(blob, "download_as_bytes")
             else blob.download_as_string()
         )
+=======
+        return blob.download_as_bytes()
+>>>>>>> prefect clone
     elif parsed.scheme == "s3":
         from prefect.utilities.aws import get_boto_client
 
         client = get_boto_client(resource="s3")
         stream = io.BytesIO()
+<<<<<<< HEAD
         client.download_fileobj(
             Bucket=parsed.netloc, Key=parsed.path.lstrip("/"), Fileobj=stream
         )
+=======
+        client.download_fileobj(Bucket=parsed.netloc, Key=parsed.path, Fileobj=stream)
+>>>>>>> prefect clone
         return stream.getvalue()
     else:
         raise ValueError(f"Unsupported file scheme {path}")

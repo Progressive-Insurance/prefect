@@ -94,6 +94,7 @@ class GCSResult(Result):
 
         try:
             self.logger.debug("Starting to download result from {}...".format(location))
+<<<<<<< HEAD
             blob = self.gcs_bucket.blob(location)
             # Support GCS < 1.31
             serialized_value = (
@@ -101,6 +102,9 @@ class GCSResult(Result):
                 if hasattr(blob, "download_as_bytes")
                 else blob.download_as_string()
             )
+=======
+            serialized_value = self.gcs_bucket.blob(location).download_as_string()
+>>>>>>> prefect clone
             try:
                 new.value = new.serializer.deserialize(serialized_value)
             except EOFError:

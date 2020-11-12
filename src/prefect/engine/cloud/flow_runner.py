@@ -1,6 +1,9 @@
 import os
 import signal
+<<<<<<< HEAD
 import sys
+=======
+>>>>>>> prefect clone
 import threading
 from time import sleep as time_sleep
 from typing import Any, Callable, Dict, Iterable, Optional, Iterator
@@ -74,6 +77,7 @@ class CloudFlowRunner(FlowRunner):
             # use empty string for testing purposes
             flow_run_id = prefect.context.get("flow_run_id", "")  # type: str
             self.client.update_flow_run_heartbeat(flow_run_id)
+<<<<<<< HEAD
             self.heartbeat_cmd = [
                 sys.executable,
                 "-m",
@@ -83,6 +87,9 @@ class CloudFlowRunner(FlowRunner):
                 "-i",
                 flow_run_id,
             ]
+=======
+            self.heartbeat_cmd = ["prefect", "heartbeat", "flow-run", "-i", flow_run_id]
+>>>>>>> prefect clone
 
             query = {
                 "query": {
@@ -243,7 +250,11 @@ class CloudFlowRunner(FlowRunner):
         return_tasks: Iterable[Task] = None,
         parameters: Dict[str, Any] = None,
         task_runner_state_handlers: Iterable[Callable] = None,
+<<<<<<< HEAD
         executor: "prefect.executors.Executor" = None,
+=======
+        executor: "prefect.engine.executors.Executor" = None,
+>>>>>>> prefect clone
         context: Dict[str, Any] = None,
         task_contexts: Dict[Task, Dict[str, Any]] = None,
     ) -> State:

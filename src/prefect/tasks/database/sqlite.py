@@ -14,7 +14,11 @@ class SQLiteQuery(Task):
     Args:
         - db (str, optional): the location of the database (.db) file
         - query (str, optional): the optional _default_ query to execute at runtime;
+<<<<<<< HEAD
             can also be provided as a keyword to `run`, which takes precedence over this default.
+=======
+            can also be provided as a keyword to `run`, which takes precendence over this default.
+>>>>>>> prefect clone
             Note that a query should consist of a _single SQL statement_.
         - **kwargs (optional): additional keyword arguments to pass to the
             standard Task initalization
@@ -55,7 +59,11 @@ class SQLiteScript(Task):
     Args:
         - db (str, optional): the location of the database (.db) file
         - script (str, optional): the optional _default_ script string to render at runtime;
+<<<<<<< HEAD
             can also be provided as a keyword to `run`, which takes precedence over this default.
+=======
+            can also be provided as a keyword to `run`, which takes precendence over this default.
+>>>>>>> prefect clone
         - **kwargs (optional): additional keyword arguments to pass to the
             standard Task initialization
     """

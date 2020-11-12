@@ -8,7 +8,11 @@ rules:
   resources: ["jobs"]
   verbs: ["*"]
 - apiGroups: [""]
+<<<<<<< HEAD
   resources: ["events", "pods"]
+=======
+  resources: ["pods"]
+>>>>>>> prefect clone
   verbs: ["*"]
 
 ---

@@ -9,7 +9,11 @@ editLink: false
 
 Task for executing a single query against a sqlite3 database; returns the result (if any) from the query.
 
+<<<<<<< HEAD
 **Args**:     <ul class="args"><li class="args">`db (str)`: the location of the database (.db) file     </li><li class="args">`query (str, optional)`: the optional _default_ query to execute at runtime;         can also be provided as a keyword to `run`, which takes precedence over this default.         Note that a query should consist of a _single SQL statement_.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task initalization</li></ul>
+=======
+**Args**:     <ul class="args"><li class="args">`db (str)`: the location of the database (.db) file     </li><li class="args">`query (str, optional)`: the optional _default_ query to execute at runtime;         can also be provided as a keyword to `run`, which takes precendence over this default.         Note that a query should consist of a _single SQL statement_.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task initalization</li></ul>
+>>>>>>> prefect clone
 
 |methods: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |:----|
@@ -24,7 +28,11 @@ Task for executing a single query against a sqlite3 database; returns the result
 
 Task for executing a SQL script against a sqlite3 database.
 
+<<<<<<< HEAD
 **Args**:     <ul class="args"><li class="args">`db (str)`: the location of the database (.db) file     </li><li class="args">`script (str, optional)`: the optional _default_ script string to render at runtime;         can also be provided as a keyword to `run`, which takes precedence over this default.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task initialization</li></ul>
+=======
+**Args**:     <ul class="args"><li class="args">`db (str)`: the location of the database (.db) file     </li><li class="args">`script (str, optional)`: the optional _default_ script string to render at runtime;         can also be provided as a keyword to `run`, which takes precendence over this default.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task initialization</li></ul>
+>>>>>>> prefect clone
 
 |methods: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 |:----|
@@ -35,4 +43,8 @@ Task for executing a SQL script against a sqlite3 database.
 <br>
 
 
+<<<<<<< HEAD
 <p class="auto-gen">This documentation was auto-generated from commit <a href='https://github.com/PrefectHQ/prefect/commit/n/a'>n/a</a> </br>on June 17, 2020 at 17:27 UTC</p>
+=======
+<p class="auto-gen">This documentation was auto-generated from commit <a href='https://github.com/PrefectHQ/prefect/commit/n/a'>n/a</a> </br>on June 17, 2020 at 17:27 UTC</p>
+>>>>>>> prefect clone

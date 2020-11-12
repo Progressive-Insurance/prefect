@@ -3,6 +3,7 @@ import socket
 import sys
 from subprocess import STDOUT, Popen, DEVNULL
 from typing import Iterable, List
+<<<<<<< HEAD
 import warnings
 
 from prefect import config
@@ -10,6 +11,16 @@ from prefect.agent import Agent
 from prefect.storage import Docker
 from prefect.run_configs import LocalRun
 from prefect.serialization.storage import StorageSchema
+=======
+
+from prefect import config
+from prefect.agent import Agent
+from prefect.environments.storage import Docker
+from prefect.run_configs import LocalRun
+from prefect.serialization.storage import StorageSchema
+from prefect.serialization.run_config import RunConfigSchema
+from prefect.utilities.agent import get_flow_run_command
+>>>>>>> prefect clone
 from prefect.utilities.graphql import GraphQLResult
 
 
@@ -56,7 +67,11 @@ class LocalAgent(Agent):
         - hostname_label (boolean, optional): a boolean specifying whether this agent should
             auto-label itself with the hostname of the machine it is running on.  Useful for
             flows which are stored on the local filesystem.
+<<<<<<< HEAD
         - storage_labels (boolean, optional, DEPRECATED): a boolean specifying whether this agent should
+=======
+        - storage_labels (boolean, optional): a boolean specifying whether this agent should
+>>>>>>> prefect clone
             auto-label itself with all of the storage options labels.
     """
 
@@ -72,7 +87,11 @@ class LocalAgent(Agent):
         max_polls: int = None,
         agent_address: str = None,
         no_cloud_logs: bool = False,
+<<<<<<< HEAD
         storage_labels: bool = None,
+=======
+        storage_labels: bool = True,
+>>>>>>> prefect clone
     ) -> None:
         self.processes = set()
         self.import_paths = import_paths or []
@@ -96,12 +115,27 @@ class LocalAgent(Agent):
             assert isinstance(self.labels, list)
             self.labels.append(hostname)
 
+<<<<<<< HEAD
         if storage_labels is not None:
             warnings.warn(
                 "Use of `storage_labels` kwarg is deprecated and the local agent no longer has "
                 "default labels.",
                 stacklevel=2,
             )
+=======
+        if storage_labels:
+            all_storage_labels = [
+                "azure-flow-storage",
+                "gcs-flow-storage",
+                "s3-flow-storage",
+                "github-flow-storage",
+                "webhook-flow-storage",
+                "gitlab-flow-storage",
+            ]
+            for label in all_storage_labels:
+                if label not in self.labels:
+                    self.labels.append(label)
+>>>>>>> prefect clone
 
         self.logger.debug(f"Import paths: {self.import_paths}")
         self.logger.debug(f"Show flow logs: {self.show_flow_logs}")
@@ -140,7 +174,25 @@ class LocalAgent(Agent):
             )
             raise TypeError("Unsupported Storage type: %s" % type(storage).__name__)
 
+<<<<<<< HEAD
         run_config = self._get_run_config(flow_run, LocalRun)
+=======
+        # If the flow is using a run_config, load it
+        if getattr(flow_run.flow, "run_config", None) is not None:
+            run_config = RunConfigSchema().load(flow_run.flow.run_config)
+            if not isinstance(run_config, LocalRun):
+                self.logger.error(
+                    "Flow run %s has a `run_config` of type `%s`, only `LocalRun` is supported",
+                    flow_run.id,
+                    type(run_config).__name__,
+                )
+                raise TypeError(
+                    "Unsupported RunConfig type: %s" % type(run_config).__name__
+                )
+        else:
+            run_config = None
+
+>>>>>>> prefect clone
         env = self.populate_env_vars(flow_run, run_config=run_config)
 
         working_dir = None if run_config is None else run_config.working_dir
@@ -157,7 +209,11 @@ class LocalAgent(Agent):
         # show flow logs, these log entries will continue to stream to the users terminal
         # until these child processes exit, even if the agent has already exited.
         p = Popen(
+<<<<<<< HEAD
             [sys.executable, "-m", "prefect", "execute", "flow-run"],
+=======
+            get_flow_run_command(flow_run).split(" "),
+>>>>>>> prefect clone
             stdout=stdout,
             stderr=STDOUT,
             env=env,

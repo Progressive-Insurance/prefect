@@ -1,8 +1,13 @@
 import uuid
 import warnings
+<<<<<<< HEAD
 from typing import Tuple, Union
 import io
 from time import sleep
+=======
+from typing import Union
+import io
+>>>>>>> prefect clone
 
 from google.cloud.exceptions import NotFound
 
@@ -12,9 +17,12 @@ from prefect.core import Task
 from prefect.utilities.gcp import get_storage_client
 from prefect.utilities.tasks import defaults_from_attrs
 
+<<<<<<< HEAD
 from google.cloud import storage
 from prefect.engine.signals import FAIL
 
+=======
+>>>>>>> prefect clone
 
 class GCSBaseTask(Task):
     def __init__(
@@ -23,10 +31,15 @@ class GCSBaseTask(Task):
         blob: str = None,
         project: str = None,
         create_bucket: bool = False,
+<<<<<<< HEAD
         chunk_size: int = 104857600,  # 1024 * 1024 B * 100 = 100 MB
         encryption_key_secret: str = None,
         request_timeout: Union[float, Tuple[float, float]] = 60,
         **kwargs,
+=======
+        encryption_key_secret: str = None,
+        **kwargs
+>>>>>>> prefect clone
     ):
         self.bucket = bucket
         self.blob = blob
@@ -39,9 +52,13 @@ class GCSBaseTask(Task):
                 UserWarning,
                 stacklevel=2,
             )
+<<<<<<< HEAD
         self.chunk_size = chunk_size
         self.encryption_key_secret = encryption_key_secret
         self.request_timeout = request_timeout
+=======
+        self.encryption_key_secret = encryption_key_secret
+>>>>>>> prefect clone
         super().__init__(**kwargs)
 
     def _retrieve_bucket(self, client, bucket: str, create_bucket: bool):
@@ -60,7 +77,10 @@ class GCSBaseTask(Task):
         self,
         bucket: str,
         blob: str,
+<<<<<<< HEAD
         chunk_size: int = None,
+=======
+>>>>>>> prefect clone
         encryption_key: str = None,
         encryption_key_secret: str = None,
     ):
@@ -68,9 +88,12 @@ class GCSBaseTask(Task):
         if blob is None:
             blob = "prefect-" + context.get("task_run_id", "no-id-" + str(uuid.uuid4()))
 
+<<<<<<< HEAD
         if chunk_size is None:
             chunk_size = self.chunk_size
 
+=======
+>>>>>>> prefect clone
         # pull encryption_key if requested
         if encryption_key_secret is not None:
             warnings.warn(
@@ -81,7 +104,11 @@ class GCSBaseTask(Task):
             )
             encryption_key = Secret(encryption_key_secret).get()
 
+<<<<<<< HEAD
         return bucket.blob(blob, encryption_key=encryption_key, chunk_size=chunk_size)
+=======
+        return bucket.blob(blob, encryption_key=encryption_key)
+>>>>>>> prefect clone
 
 
 class GCSDownload(GCSBaseTask):
@@ -93,6 +120,7 @@ class GCSDownload(GCSBaseTask):
         - blob (str, optional): default blob name to download.
         - project (str, optional): default Google Cloud project to work within.
             If not provided, will be inferred from your Google Cloud credentials
+<<<<<<< HEAD
         - chunk_size (int, optional): The size of a chunk of data whenever iterating (in bytes).
             This must be a multiple of 256 KB per the API specification.
         - encryption_key_secret (str, optional, DEPRECATED): the name of the Prefect Secret
@@ -100,6 +128,10 @@ class GCSDownload(GCSBaseTask):
         - request_timeout (Union[float, Tuple[float, float]], optional): default number of
             seconds the transport should wait for the server response.
             Can also be passed as a tuple (connect_timeout, read_timeout).
+=======
+        - encryption_key_secret (str, optional, DEPRECATED): the name of the Prefect Secret
+            storing an optional `encryption_key` to be used when downloading the Blob
+>>>>>>> prefect clone
         - **kwargs (dict, optional): additional keyword arguments to pass to the Task constructor
 
     Note that the design of this task allows you to initialize a _template_ with default
@@ -113,15 +145,21 @@ class GCSDownload(GCSBaseTask):
         bucket: str,
         blob: str = None,
         project: str = None,
+<<<<<<< HEAD
         chunk_size: int = None,
         encryption_key_secret: str = None,
         request_timeout: Union[float, Tuple[float, float]] = 60,
         **kwargs,
+=======
+        encryption_key_secret: str = None,
+        **kwargs
+>>>>>>> prefect clone
     ):
         super().__init__(
             bucket=bucket,
             blob=blob,
             project=project,
+<<<<<<< HEAD
             chunk_size=chunk_size,
             encryption_key_secret=encryption_key_secret,
             request_timeout=request_timeout,
@@ -131,16 +169,29 @@ class GCSDownload(GCSBaseTask):
     @defaults_from_attrs(
         "blob", "bucket", "project", "encryption_key_secret", "request_timeout"
     )
+=======
+            encryption_key_secret=encryption_key_secret,
+            **kwargs
+        )
+
+    @defaults_from_attrs("blob", "bucket", "project", "encryption_key_secret")
+>>>>>>> prefect clone
     def run(
         self,
         bucket: str = None,
         blob: str = None,
         project: str = None,
+<<<<<<< HEAD
         chunk_size: int = None,
         credentials: dict = None,
         encryption_key: str = None,
         encryption_key_secret: str = None,
         request_timeout: Union[float, Tuple[float, float]] = 60,
+=======
+        credentials: dict = None,
+        encryption_key: str = None,
+        encryption_key_secret: str = None,
+>>>>>>> prefect clone
     ) -> str:
         """
         Run method for this Task.  Invoked by _calling_ this Task after initialization
@@ -154,8 +205,11 @@ class GCSDownload(GCSBaseTask):
             - blob (str, optional): blob name to download from
             - project (str, optional): Google Cloud project to work within. If not provided
                 here or at initialization, will be inferred from your Google Cloud credentials
+<<<<<<< HEAD
             - chunk_size (int, optional): The size of a chunk of data whenever iterating (in bytes).
                 This must be a multiple of 256 KB per the API specification.
+=======
+>>>>>>> prefect clone
             - credentials (dict, optional): a JSON document containing Google Cloud
                 credentials.  You should provide these at runtime with an upstream Secret task.
                 If not provided, Prefect will first check `context` for `GCP_CREDENTIALS` and
@@ -163,9 +217,12 @@ class GCSDownload(GCSBaseTask):
             - encryption_key (str, optional): an encryption key
             - encryption_key_secret (str, optional, DEPRECATED): the name of the Prefect Secret
                 storing an optional `encryption_key` to be used when uploading the Blob
+<<<<<<< HEAD
             - request_timeout (Union[float, Tuple[float, float]], optional): the number of
                 seconds the transport should wait for the server response.
                 Can also be passed as a tuple (connect_timeout, read_timeout).
+=======
+>>>>>>> prefect clone
 
         Returns:
             - str: the data from the blob, as a string
@@ -185,6 +242,7 @@ class GCSDownload(GCSBaseTask):
         )
 
         # identify blob name
+<<<<<<< HEAD
         blob = self._get_blob(
             bucket,
             blob,
@@ -198,6 +256,16 @@ class GCSDownload(GCSBaseTask):
             if hasattr(blob, "download_as_bytes")
             else blob.download_as_string(timeout=request_timeout)
         )
+=======
+        gcs_blob = self._get_blob(
+            bucket,
+            blob,
+            encryption_key=encryption_key,
+            encryption_key_secret=encryption_key_secret,
+        )
+        data = gcs_blob.download_as_string()
+        return data
+>>>>>>> prefect clone
 
 
 class GCSUpload(GCSBaseTask):
@@ -210,15 +278,21 @@ class GCSUpload(GCSBaseTask):
             beginning with `prefect-` and containing the Task Run ID will be used
         - project (str, optional): default Google Cloud project to work within.
             If not provided, will be inferred from your Google Cloud credentials
+<<<<<<< HEAD
         - chunk_size (int, optional): The size of a chunk of data whenever iterating (in bytes).
             This must be a multiple of 256 KB per the API specification.
+=======
+>>>>>>> prefect clone
         - create_bucket (bool, optional): boolean specifying whether to create the bucket if it
             does not exist, otherwise an Exception is raised. Defaults to `False`.
         - encryption_key_secret (str, optional, DEPRECATED): the name of the Prefect Secret
             storing an optional `encryption_key` to be used when uploading the Blob
+<<<<<<< HEAD
         - request_timeout (Union[float, Tuple[float, float]], optional): default number of
             seconds the transport should wait for the server response.
             Can also be passed as a tuple (connect_timeout, read_timeout).
+=======
+>>>>>>> prefect clone
         - **kwargs (dict, optional): additional keyword arguments to pass to the Task constructor
 
     Note that the design of this task allows you to initialize a _template_ with default
@@ -232,16 +306,23 @@ class GCSUpload(GCSBaseTask):
         bucket: str,
         blob: str = None,
         project: str = None,
+<<<<<<< HEAD
         chunk_size: int = 104857600,  # 1024 * 1024 B * 100 = 100 MB
         create_bucket: bool = False,
         encryption_key_secret: str = None,
         request_timeout: Union[float, Tuple[float, float]] = 60,
         **kwargs,
+=======
+        create_bucket: bool = False,
+        encryption_key_secret: str = None,
+        **kwargs
+>>>>>>> prefect clone
     ):
         super().__init__(
             bucket=bucket,
             blob=blob,
             project=project,
+<<<<<<< HEAD
             chunk_size=chunk_size,
             create_bucket=create_bucket,
             encryption_key_secret=encryption_key_secret,
@@ -256,6 +337,15 @@ class GCSUpload(GCSBaseTask):
         "create_bucket",
         "encryption_key_secret",
         "request_timeout",
+=======
+            create_bucket=create_bucket,
+            encryption_key_secret=encryption_key_secret,
+            **kwargs
+        )
+
+    @defaults_from_attrs(
+        "bucket", "blob", "project", "create_bucket", "encryption_key_secret"
+>>>>>>> prefect clone
     )
     def run(
         self,
@@ -263,14 +353,20 @@ class GCSUpload(GCSBaseTask):
         bucket: str = None,
         blob: str = None,
         project: str = None,
+<<<<<<< HEAD
         chunk_size: int = None,
+=======
+>>>>>>> prefect clone
         credentials: dict = None,
         encryption_key: str = None,
         create_bucket: bool = False,
         encryption_key_secret: str = None,
         content_type: str = None,
         content_encoding: str = None,
+<<<<<<< HEAD
         request_timeout: Union[float, Tuple[float, float]] = 60,
+=======
+>>>>>>> prefect clone
     ) -> str:
         """
         Run method for this Task.  Invoked by _calling_ this Task after initialization
@@ -286,8 +382,11 @@ class GCSUpload(GCSBaseTask):
                 a string beginning with `prefect-` and containing the Task Run ID will be used
             - project (str, optional): Google Cloud project to work within. Can be inferred
                 from credentials if not provided.
+<<<<<<< HEAD
             - chunk_size (int, optional): The size of a chunk of data whenever iterating (in bytes).
                 This must be a multiple of 256 KB per the API specification.
+=======
+>>>>>>> prefect clone
             - credentials (dict, optional): a JSON document containing Google Cloud credentials.
                 You should provide these at runtime with an upstream Secret task.  If not
                 provided, Prefect will first check `context` for `GCP_CREDENTIALS` and lastly
@@ -299,12 +398,17 @@ class GCSUpload(GCSBaseTask):
                 storing an optional `encryption_key` to be used when uploading the Blob.
             - content_type (str, optional): HTTP ‘Content-Type’ header for this object.
             - content_encoding (str, optional): HTTP ‘Content-Encoding’ header for this object.
+<<<<<<< HEAD
             - request_timeout (Union[float, Tuple[float, float]], optional): the number of
                 seconds the transport should wait for the server response.
                 Can also be passed as a tuple (connect_timeout, read_timeout).
 
         Raises:
             - TypeError: if data is neither string nor bytes.
+=======
+
+        Raises:
+>>>>>>> prefect clone
             - google.cloud.exception.NotFound: if `create_bucket=False` and the bucket name is
                 not found
 
@@ -323,14 +427,21 @@ class GCSUpload(GCSBaseTask):
         gcs_blob = self._get_blob(
             bucket,
             blob,
+<<<<<<< HEAD
             chunk_size=chunk_size,
+=======
+>>>>>>> prefect clone
             encryption_key=encryption_key,
             encryption_key_secret=encryption_key_secret,
         )
 
         # Upload
         if type(data) == str:
+<<<<<<< HEAD
             gcs_blob.upload_from_string(data, timeout=request_timeout)
+=======
+            gcs_blob.upload_from_string(data)
+>>>>>>> prefect clone
         elif type(data) == bytes:
             # Set content type and encoding if supplied.
             # This is likely only desirable if uploading gzip data:
@@ -339,9 +450,13 @@ class GCSUpload(GCSBaseTask):
                 gcs_blob.content_type = content_type
             if content_encoding:
                 gcs_blob.content_encoding = content_encoding
+<<<<<<< HEAD
             gcs_blob.upload_from_file(io.BytesIO(data), timeout=request_timeout)
         else:
             raise TypeError(f"data must be str or bytes: got {type(data)} instead")
+=======
+            gcs_blob.upload_from_file(io.BytesIO(data))
+>>>>>>> prefect clone
         return gcs_blob.name
 
 
@@ -360,9 +475,12 @@ class GCSCopy(GCSBaseTask):
         - dest_blob (str, optional): default destination blob name.
         - project (str, optional): default Google Cloud project to work within.
             If not provided, will be inferred from your Google Cloud credentials
+<<<<<<< HEAD
         - request_timeout (Union[float, Tuple[float, float]], optional): default number of
             seconds the transport should wait for the server response.
             Can also be passed as a tuple (connect_timeout, read_timeout).
+=======
+>>>>>>> prefect clone
         - **kwargs (dict, optional): additional keyword arguments to pass to the
             Task constructor
 
@@ -379,14 +497,19 @@ class GCSCopy(GCSBaseTask):
         dest_bucket: str = None,
         dest_blob: str = None,
         project: str = None,
+<<<<<<< HEAD
         request_timeout: Union[float, Tuple[float, float]] = 60,
         **kwargs,
+=======
+        **kwargs
+>>>>>>> prefect clone
     ):
         self.source_bucket = source_bucket
         self.source_blob = source_blob
         self.dest_bucket = dest_bucket
         self.dest_blob = dest_blob
 
+<<<<<<< HEAD
         super().__init__(project=project, request_timeout=request_timeout, **kwargs)
 
     @defaults_from_attrs(
@@ -396,6 +519,12 @@ class GCSCopy(GCSBaseTask):
         "dest_blob",
         "project",
         "request_timeout",
+=======
+        super().__init__(project=project, **kwargs)
+
+    @defaults_from_attrs(
+        "source_bucket", "source_blob", "dest_bucket", "dest_blob", "project"
+>>>>>>> prefect clone
     )
     def run(
         self,
@@ -405,7 +534,10 @@ class GCSCopy(GCSBaseTask):
         dest_blob: str = None,
         project: str = None,
         credentials: dict = None,
+<<<<<<< HEAD
         request_timeout: Union[float, Tuple[float, float]] = 60,
+=======
+>>>>>>> prefect clone
     ) -> str:
         """
         Run method for this Task. Invoked by _calling_ this Task after initialization
@@ -425,9 +557,12 @@ class GCSCopy(GCSBaseTask):
                 You should provide these at runtime with an upstream Secret task.  If not
                 provided, Prefect will first check `context` for `GCP_CREDENTIALS` and lastly
                 will use default Google client logic.
+<<<<<<< HEAD
             - request_timeout (Union[float, Tuple[float, float]], optional): the number of
                 seconds the transport should wait for the server response.
                 Can also be passed as a tuple (connect_timeout, read_timeout).
+=======
+>>>>>>> prefect clone
 
         Returns:
             - str: the name of the destination blob
@@ -452,6 +587,7 @@ class GCSCopy(GCSBaseTask):
         dest_bucket_obj = client.get_bucket(dest_bucket)
         # copy from source blob to dest bucket
         source_bucket_obj.copy_blob(
+<<<<<<< HEAD
             blob=source_blob_obj,
             destination_bucket=dest_bucket_obj,
             new_name=dest_blob,
@@ -573,3 +709,9 @@ class GCSBlobExists(GCSBaseTask):
         if fail_if_not_found and not blob_exists:
             raise FAIL(message="Blob not found")
         return blob_exists
+=======
+            blob=source_blob_obj, destination_bucket=dest_bucket_obj, new_name=dest_blob
+        )
+
+        return dest_blob
+>>>>>>> prefect clone

@@ -13,7 +13,11 @@ class StringFormatter(Task):
 
     Args:
         - template (str, optional): the optional _default_ template string to format at runtime;
+<<<<<<< HEAD
             can also be provided as a keyword to `run`, which takes precedence over this default.
+=======
+            can also be provided as a keyword to `run`, which takes precendence over this default.
+>>>>>>> prefect clone
         - **kwargs (optional): additional keyword arguments to pass to the
             standard Task constructor
 

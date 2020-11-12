@@ -83,6 +83,7 @@ class PostgresExecute(Task):
         # try to execute query
         # context manager automatically rolls back failed transactions
         try:
+<<<<<<< HEAD
             with conn, conn.cursor() as cursor:
                 executed = cursor.execute(query=query, vars=data)
                 if commit:
@@ -192,6 +193,23 @@ class PostgresExecuteMany(Task):
         # ensure connection is closed
         finally:
             conn.close()
+=======
+            with conn:
+                with conn.cursor() as cursor:
+                    executed = cursor.execute(query=query, vars=data)
+                    if commit:
+                        conn.commit()
+                    else:
+                        conn.rollback()
+
+            conn.close()
+            return executed
+
+        # pass through error, and ensure connection is closed
+        except (Exception, pg.DatabaseError):
+            conn.close()
+            raise
+>>>>>>> prefect clone
 
 
 class PostgresFetch(Task):
@@ -292,6 +310,7 @@ class PostgresFetch(Task):
         # try to execute query
         # context manager automatically rolls back failed transactions
         try:
+<<<<<<< HEAD
             with conn, conn.cursor() as cursor:
                 cursor.execute(query=query, vars=data)
 
@@ -311,3 +330,27 @@ class PostgresFetch(Task):
         # ensure connection is closed
         finally:
             conn.close()
+=======
+            with conn:
+                with conn.cursor() as cursor:
+                    cursor.execute(query=query, vars=data)
+
+                    # fetch results
+                    if fetch == "all":
+                        records = cursor.fetchall()
+                    elif fetch == "many":
+                        records = cursor.fetchmany(fetch_count)
+                    else:
+                        records = cursor.fetchone()
+
+                    if commit:
+                        conn.commit()
+
+            conn.close()
+            return records
+
+        # pass through error, and ensure connection is closed
+        except (Exception, pg.DatabaseError):
+            conn.close()
+            raise
+>>>>>>> prefect clone

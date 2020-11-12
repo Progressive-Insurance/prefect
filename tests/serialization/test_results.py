@@ -2,7 +2,12 @@ import pytest
 
 import prefect
 from prefect.engine import results
+<<<<<<< HEAD
 from prefect.engine.result import Result
+=======
+from prefect.engine.result import NoResult, NoResultType, Result
+from prefect.engine.result_handlers import ResultHandler
+>>>>>>> prefect clone
 from prefect.serialization.result import StateResultSchema
 
 
@@ -132,6 +137,27 @@ def test_secret_result():
     assert new_result.value is None
 
 
+<<<<<<< HEAD
+=======
+def test_result_handler_result():
+    class MyHandler(ResultHandler):
+        pass
+
+    schema = StateResultSchema()
+    result = results.ResultHandlerResult(result_handler=MyHandler(), location="foo")
+    serialized = schema.dump(result)
+
+    assert serialized["type"] == "ResultHandlerResult"
+    assert serialized["location"] == "foo"
+    assert serialized["result_handler_type"] == "MyHandler"
+
+    new_result = schema.load(serialized)
+    assert isinstance(new_result, results.ResultHandlerResult)
+    assert new_result.location == "foo"
+    assert new_result.value is None
+
+
+>>>>>>> prefect clone
 def test_custom_result():
     class MySuperAwesomeAmazingTopOfTheLineCustomResult(Result):
         def __init__(self, test_kwarg=None, **kwargs):

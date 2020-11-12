@@ -3,5 +3,12 @@ kind: Job
 spec:
   template:
     spec:
+<<<<<<< HEAD
       containers:
         - name: flow
+=======
+      restartPolicy: Never
+      containers:
+        - name: flow
+          command: ["/bin/sh", "-c"]
+>>>>>>> prefect clone

@@ -1,7 +1,10 @@
 import copy
 import json
 import os
+<<<<<<< HEAD
 import warnings
+=======
+>>>>>>> prefect clone
 from ast import literal_eval
 from typing import Iterable
 import uuid
@@ -16,6 +19,7 @@ from prefect.utilities.graphql import GraphQLResult
 
 class FargateAgent(Agent):
     """
+<<<<<<< HEAD
     Agent which deploys flow runs as tasks using Fargate.
 
     DEPRECATED: The Fargate agent is deprecated, please transition to using the
@@ -24,6 +28,11 @@ class FargateAgent(Agent):
     This agent can run anywhere as long as the proper access configuration
     variables are set.  Information on using the Fargate Agent can be found at
     https://docs.prefect.io/orchestration/agents/fargate.html
+=======
+    Agent which deploys flow runs as tasks using Fargate. This agent can run anywhere as
+    long as the proper access configuration variables are set.  Information on using the
+    Fargate Agent can be found at https://docs.prefect.io/orchestration/agents/fargate.html
+>>>>>>> prefect clone
 
     All `kwargs` are accepted that one would normally pass to boto3 for `register_task_definition`
     and `run_task`. For information on the kwargs supported visit the following links:
@@ -137,11 +146,14 @@ class FargateAgent(Agent):
             no_cloud_logs=no_cloud_logs,
         )
 
+<<<<<<< HEAD
         if not kwargs.pop("_called_from_cli", False):
             warnings.warn(
                 "`FargateAgent` is deprecated, please transition to using `ECSAgent` instead"
             )
 
+=======
+>>>>>>> prefect clone
         from boto3 import client as boto3_client
         from boto3 import resource as boto3_resource
         from botocore.config import Config

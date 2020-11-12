@@ -8,7 +8,10 @@ that environment. e.g. the `DaskKubernetesEnvironment` is an environment which
 runs a flow on Kubernetes using the `dask-kubernetes` library.
 """
 
+<<<<<<< HEAD
 import warnings
+=======
+>>>>>>> prefect clone
 from typing import Callable, Iterable, TYPE_CHECKING
 
 import prefect
@@ -24,10 +27,13 @@ class Environment:
     """
     Base class for Environments.
 
+<<<<<<< HEAD
     DEPRECATED: Environment based configuration is deprecated, please transition to
     configuring `flow.run_config` instead of `flow.environment`. See
     https://docs.prefect.io/orchestration/flow_config/overview.html for more info.
 
+=======
+>>>>>>> prefect clone
     An environment is an object that can be instantiated in a way that makes it possible to
     call `environment.setup()` to stand up any required static infrastructure and
     `environment.execute()` to execute the flow inside this environment.
@@ -56,12 +62,15 @@ class Environment:
         self.on_exit = on_exit
         self.metadata = metadata or {}
         self.logger = logging.get_logger(type(self).__name__)
+<<<<<<< HEAD
         warnings.warn(
             "`Environment` based flow configuration is deprecated, please transition to configuring "
             "`flow.run_config` instead of `flow.environment`. "
             "See https://docs.prefect.io/orchestration/flow_config/overview.html for more info.",
             stacklevel=2 if type(self) is Environment else 3,
         )
+=======
+>>>>>>> prefect clone
 
     def __repr__(self) -> str:
         return "<Environment: {}>".format(type(self).__name__)
@@ -169,7 +178,11 @@ def load_and_run_flow() -> None:
             secrets[secret] = prefect.tasks.secrets.PrefectSecret(name=secret).run()
 
         with prefect.context(secrets=secrets):
+<<<<<<< HEAD
             flow = storage.get_flow(flow_data.name)
+=======
+            flow = storage.get_flow(storage.flows[flow_data.name])
+>>>>>>> prefect clone
             flow.environment.run(flow)
     except Exception as exc:
         logger.exception("Unexpected error raised during flow run: {}".format(exc))

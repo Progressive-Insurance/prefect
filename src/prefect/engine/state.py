@@ -16,7 +16,11 @@ from typing import Any, Dict, List, Optional, Type, Mapping
 import pendulum
 
 import prefect
+<<<<<<< HEAD
 from prefect.engine.result import Result, NoResult
+=======
+from prefect.engine.result import NoResult, Result, ResultInterface
+>>>>>>> prefect clone
 
 
 class State:
@@ -48,12 +52,20 @@ class State:
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         context: Dict[str, Any] = None,
         cached_inputs: Dict[str, Result] = None,
     ):
         self.message = message
+<<<<<<< HEAD
         self.result = result if result is not None else NoResult
+=======
+        self.result = result
+>>>>>>> prefect clone
         self.context = context or dict()
         self.cached_inputs = cached_inputs or dict()  # type: Dict[str, Result]
         if "task_tags" in prefect.context:
@@ -88,7 +100,11 @@ class State:
 
     @result.setter
     def result(self, value: Any) -> None:
+<<<<<<< HEAD
         if isinstance(value, Result):
+=======
+        if isinstance(value, ResultInterface):
+>>>>>>> prefect clone
             self._result = value
         else:
             self._result = Result(value=value)
@@ -119,8 +135,12 @@ class State:
 
         result_reader = result or self._result
 
+<<<<<<< HEAD
         known_location = self._result.location  # type: ignore
 
+=======
+        known_location = self._result.location or getattr(result, "location", None)  # type: ignore
+>>>>>>> prefect clone
         if self._result.value is None and known_location is not None:  # type: ignore
             self._result = result_reader.read(known_location)  # type: ignore
         return self
@@ -399,7 +419,11 @@ class Pending(State):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         cached_inputs: Dict[str, Result] = None,
         context: Dict[str, Any] = None,
     ):
@@ -433,7 +457,11 @@ class Scheduled(Pending):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         start_time: datetime.datetime = None,
         cached_inputs: Dict[str, Result] = None,
         context: Dict[str, Any] = None,
@@ -469,7 +497,11 @@ class Paused(Scheduled):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         start_time: datetime.datetime = None,
         cached_inputs: Dict[str, Result] = None,
         context: Dict[str, Any] = None,
@@ -502,7 +534,11 @@ class _MetaState(State):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         state: State = None,
         context: Dict[str, Any] = None,
         cached_inputs: Dict[str, Result] = None,
@@ -598,7 +634,11 @@ class Queued(_MetaState):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         state: State = None,
         start_time: datetime.datetime = None,
         context: Dict[str, Any] = None,
@@ -655,7 +695,11 @@ class Retrying(Scheduled):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         start_time: datetime.datetime = None,
         cached_inputs: Dict[str, Result] = None,
         context: Dict[str, Any] = None,
@@ -759,7 +803,11 @@ class Looped(Finished):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         loop_count: int = None,
         context: Dict[str, Any] = None,
         cached_inputs: Dict[str, Result] = None,
@@ -814,7 +862,11 @@ class Cached(Success):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         cached_inputs: Dict[str, Result] = None,
         cached_parameters: Dict[str, Any] = None,
         cached_result_expiration: datetime.datetime = None,
@@ -862,7 +914,11 @@ class Mapped(Success):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         map_states: List[State] = None,
         context: Dict[str, Any] = None,
         cached_inputs: Dict[str, Result] = None,
@@ -919,7 +975,11 @@ class Failed(Finished):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         cached_inputs: Dict[str, Result] = None,
         context: Dict[str, Any] = None,
     ):
@@ -999,7 +1059,11 @@ class Skipped(Success):
     def __init__(
         self,
         message: str = None,
+<<<<<<< HEAD
         result: Any = None,
+=======
+        result: Any = NoResult,
+>>>>>>> prefect clone
         context: Dict[str, Any] = None,
         cached_inputs: Dict[str, Result] = None,
     ):

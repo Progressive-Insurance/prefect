@@ -1432,7 +1432,6 @@ class Flow:
         flow_copy = self.copy()
         for task, slug in flow_copy.slugs.items():
             task.slug = slug
-
         serialized = schema(exclude=["storage"]).dump(flow_copy)
 
         if build:

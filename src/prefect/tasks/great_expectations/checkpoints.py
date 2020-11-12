@@ -8,6 +8,7 @@ docs](https://docs.greatexpectations.io/en/latest/tutorials/getting_started/set_
 You can use these task library tasks to interact with your Great Expectations checkpoint from a
 Prefect flow.
 """
+<<<<<<< HEAD
 from typing import Optional
 import warnings
 
@@ -272,12 +273,26 @@ class RunGreatExpectationsValidation(Task):
             raise signals.FAIL(result=results)
 
         return results
+=======
+import prefect
+from prefect import Task
+from prefect.engine import signals
+from prefect.utilities.tasks import defaults_from_attrs
+
+
+import great_expectations as ge
+
+from typing import Optional
+>>>>>>> prefect clone
 
 
 class RunGreatExpectationsCheckpoint(Task):
     """
+<<<<<<< HEAD
     DEPRECATED
 
+=======
+>>>>>>> prefect clone
     Task for running a Great Expectations checkpoint. For this task to run properly, it must be
     run above your great_expectations directory or configured with the `context_root_dir` for
     your great_expectations directory on the local file system of the worker process.
@@ -298,6 +313,7 @@ class RunGreatExpectationsCheckpoint(Task):
         self,
         checkpoint_name: str = None,
         context_root_dir: str = None,
+<<<<<<< HEAD
         runtime_environment: dict = {},
         run_name: str = None,
         **kwargs
@@ -312,6 +328,15 @@ class RunGreatExpectationsCheckpoint(Task):
         self.checkpoint_name = checkpoint_name
         self.context_root_dir = context_root_dir
         self.runtime_environment = runtime_environment
+=======
+        runtime_environment: Optional[dict] = None,
+        run_name: str = None,
+        **kwargs
+    ):
+        self.checkpoint_name = checkpoint_name
+        self.context_root_dir = context_root_dir
+        self.runtime_environment = runtime_environment or dict()
+>>>>>>> prefect clone
         self.run_name = run_name
 
         super().__init__(**kwargs)
@@ -323,7 +348,11 @@ class RunGreatExpectationsCheckpoint(Task):
         self,
         checkpoint_name: str = None,
         context_root_dir: str = None,
+<<<<<<< HEAD
         runtime_environment: dict = {},
+=======
+        runtime_environment: Optional[dict] = None,
+>>>>>>> prefect clone
         run_name: str = None,
         **kwargs
     ):
@@ -354,6 +383,11 @@ class RunGreatExpectationsCheckpoint(Task):
         if checkpoint_name is None:
             raise ValueError("You must provide the checkpoint name.")
 
+<<<<<<< HEAD
+=======
+        runtime_environment = runtime_environment or dict()
+
+>>>>>>> prefect clone
         context = ge.DataContext(
             context_root_dir=context_root_dir, runtime_environment=runtime_environment
         )

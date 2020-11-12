@@ -23,7 +23,11 @@ You can set this directly in the UI on the Home page:
 
 ![UI Endpoint Setting](/orchestration/server/server-endpoint.png)
 
+<<<<<<< HEAD
 ...or by setting `apollo_url` in `~/.prefect/config.toml` on whatever machine you're running Prefect Server:
+=======
+...or by setting `apollo_url` in `./prefect/config.toml` on whatever machine you're running Prefect Server:
+>>>>>>> prefect clone
 
 ```
 [server]
@@ -62,7 +66,11 @@ When new versions of the server are released you will want to upgrade in order t
 enhancements, and new features. When running the server in containers using Docker compose an upgrade
 should be as simple as stopping the instance, installing the most recent version of prefect, and then
 starting the server again. Note that you'll want to be using a [persistent
+<<<<<<< HEAD
 volume](/orchestration/server/deploy-local.md#database-persistence-and-migrations) for Postgres to ensure
+=======
+volume](/orchestration/server/deploy.html#database-persistence-and-migrations) for Postgres to ensure
+>>>>>>> prefect clone
 that your metadata is not lost between restarts.
 
 Due to the current implementation of the single node deployment for server this will result in a small

@@ -124,6 +124,7 @@ from prefect.agent.docker import DockerAgent
 
 DockerAgent(labels=["dev", "staging"]).start()
 ```
+<<<<<<< HEAD
 :::
 
 ::: tab "Prefect Config"
@@ -164,6 +165,24 @@ DockerAgent(env_vars={"KEY": "VALUE", "KEY2": "VALUE2"})
 ```
 :::
 ::::
+=======
+
+- Arguments to the CLI:
+
+```
+$ prefect agent <AGENT TYPE> start --label dev --label staging
+```
+
+- As an environment variable:
+
+```
+$ export PREFECT__CLOUD__AGENT__LABELS='["dev", "staging"]'
+```
+
+:::tip Environment Variable
+Setting labels through the `PREFECT__CLOUD__AGENT__LABELS` environment variable will make those labels the default unless overridden through initialization of an Agent class or through the CLI's `agent start` command.
+:::
+>>>>>>> prefect clone
 
 ### Health Checks
 
@@ -172,6 +191,7 @@ Health checks can be used by common orchestration services (e.g.
 `supervisord`, `docker`, `kubernetes`, ...) to check that the agent is
 running properly and take actions (such as restarting the agent) if it's not.
 
+<<<<<<< HEAD
 A few ways to configure:
 
 :::: tabs
@@ -203,6 +223,23 @@ $ export PREFECT__CLOUD__AGENT__AGENT_ADDRESS=http://localhost:8080
 ```
 :::
 ::::
+=======
+A few ways to enable:
+
+- Passing an argument to the CLI:
+
+```
+$ prefect agent <AGENT TYPE> start --agent-address http://localhost:8080
+```
+
+- Setting an environment variable:
+
+```
+$ export PREFECT__CLOUD__AGENT__AGENT_ADDRESS=http://localhost:8080
+```
+
+- Setting `cloud.agent.agent_address` in your [configuration](../../core/concepts/configuration.html):
+>>>>>>> prefect clone
 
 If enabled, the HTTP health check will be available via the `/api/health`
 route at the configured agent address. This route returns `200 OK` if the

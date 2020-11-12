@@ -1263,7 +1263,6 @@ EXTRA_CALL_PARAMETERS = [
     if p.kind == inspect.Parameter.KEYWORD_ONLY
 ]
 
-
 # DEPRECATED - this is to allow backwards-compatible access to Parameters
 # https://github.com/PrefectHQ/prefect/pull/2758
 from .parameter import Parameter as _Parameter

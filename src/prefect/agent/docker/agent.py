@@ -9,6 +9,10 @@ from typing import TYPE_CHECKING, Dict, Iterable, List, Tuple
 from prefect import config, context
 from prefect.agent import Agent
 from prefect.run_configs import DockerRun
+<<<<<<< HEAD
+=======
+from prefect.serialization.run_config import RunConfigSchema
+>>>>>>> prefect clone
 from prefect.utilities.agent import get_flow_image, get_flow_run_command
 from prefect.utilities.docker_util import get_docker_ip
 from prefect.utilities.graphql import GraphQLResult
@@ -350,11 +354,30 @@ class DockerAgent(Agent):
         # the 'import prefect' time low
         import docker
 
+<<<<<<< HEAD
         run_config = self._get_run_config(flow_run, DockerRun)
         assert run_config is None or isinstance(run_config, DockerRun)  # mypy
 
         image = get_flow_image(flow_run=flow_run)
         env_vars = self.populate_env_vars(flow_run, image, run_config=run_config)
+=======
+        if getattr(flow_run.flow, "run_config", None) is not None:
+            run_config = RunConfigSchema().load(flow_run.flow.run_config)
+            if not isinstance(run_config, DockerRun):
+                self.logger.error(
+                    "Flow run %s has a `run_config` of type `%s`, only `DockerRun` is supported",
+                    flow_run.id,
+                    type(run_config).__name__,
+                )
+                raise TypeError(
+                    "Unsupported RunConfig type: %s" % type(run_config).__name__
+                )
+        else:
+            run_config = None
+
+        image = get_flow_image(flow_run=flow_run)
+        env_vars = self.populate_env_vars(flow_run, run_config=run_config)
+>>>>>>> prefect clone
 
         if not self.no_pull and len(image.split("/")) > 1:
             self.logger.info("Pulling image {}...".format(image))
@@ -404,12 +427,15 @@ class DockerAgent(Agent):
                 {self.network: self.docker_client.create_endpoint_config()}
             )
 
+<<<<<<< HEAD
         labels = {
             "io.prefect.flow-name": flow_run.flow.name,
             "io.prefect.flow-id": flow_run.flow.id,
             "io.prefect.flow-run-id": flow_run.id,
         }
 
+=======
+>>>>>>> prefect clone
         container = self.docker_client.create_container(
             image,
             command=get_flow_run_command(flow_run),
@@ -417,7 +443,10 @@ class DockerAgent(Agent):
             volumes=container_mount_paths,
             host_config=self.docker_client.create_host_config(**host_config),
             networking_config=networking_config,
+<<<<<<< HEAD
             labels=labels,
+=======
+>>>>>>> prefect clone
         )
 
         # Start the container
@@ -456,14 +485,21 @@ class DockerAgent(Agent):
         self.processes.append(proc)
 
     def populate_env_vars(
+<<<<<<< HEAD
         self, flow_run: GraphQLResult, image: str, run_config: DockerRun = None
+=======
+        self, flow_run: GraphQLResult, run_config: DockerRun = None
+>>>>>>> prefect clone
     ) -> dict:
         """
         Populate metadata and variables in the environment variables for a flow run
 
         Args:
             - flow_run (GraphQLResult): A flow run object
+<<<<<<< HEAD
             - image (str): The image for this flow
+=======
+>>>>>>> prefect clone
             - run_config (DockerRun, optional): The `run_config` for the flow, if any.
 
         Returns:
@@ -488,7 +524,11 @@ class DockerAgent(Agent):
         # 2. Values set on the agent via `--env`
         env.update(self.env_vars)
 
+<<<<<<< HEAD
         # 3. Values set on a DockerRun RunConfig (if present)
+=======
+        # 3. Values set on a DockerRun RunConfig (if present
+>>>>>>> prefect clone
         if run_config is not None and run_config.env is not None:
             env.update(run_config.env)
 
@@ -500,7 +540,10 @@ class DockerAgent(Agent):
                 "PREFECT__CLOUD__AGENT__LABELS": str(self.labels),
                 "PREFECT__CONTEXT__FLOW_RUN_ID": flow_run.id,  # type: ignore
                 "PREFECT__CONTEXT__FLOW_ID": flow_run.flow.id,  # type: ignore
+<<<<<<< HEAD
                 "PREFECT__CONTEXT__IMAGE": image,
+=======
+>>>>>>> prefect clone
                 "PREFECT__CLOUD__USE_LOCAL_SECRETS": "false",
                 "PREFECT__LOGGING__LOG_TO_CLOUD": str(self.log_to_cloud).lower(),
                 "PREFECT__ENGINE__FLOW_RUNNER__DEFAULT_CLASS": "prefect.engine.cloud.CloudFlowRunner",

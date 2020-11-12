@@ -56,6 +56,9 @@ from prefect.storage import Docker
 f = Flow("example-storage")
 f.storage = Docker(registry_url="prefecthq/storage-example")
 
+# Add flow to the storage
+f.storage.add_flow(f)
+
 # Pre-build storage
 f.storage.build()
 

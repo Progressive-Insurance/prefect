@@ -141,8 +141,13 @@ def local():
 )
 @click.option(
     "--storage-labels/--no-storage-labels",
+<<<<<<< HEAD
     default=None,
     help="Add all storage labels to the LocalAgent. DEPRECATED",
+=======
+    default=True,
+    help="Add all storage labels to the LocalAgent",
+>>>>>>> prefect clone
 )
 @click.option(
     "--hostname-label/--no-hostname-label",
@@ -260,6 +265,7 @@ def kubernetes():
     "job_template_path",
     help="Path to a kubernetes job template to use instead of the default.",
 )
+<<<<<<< HEAD
 @click.option(
     "--service-account-name",
     "service_account_name",
@@ -280,6 +286,13 @@ def start(image_pull_secrets=None, **kwargs):
         image_pull_secrets = [s.strip() for s in image_pull_secrets.split(",")]
 
     start_agent(KubernetesAgent, image_pull_secrets=image_pull_secrets, **kwargs)
+=======
+def start(**kwargs):
+    """Start a Kubernetes agent"""
+    from prefect.agent.kubernetes import KubernetesAgent
+
+    start_agent(KubernetesAgent, **kwargs)
+>>>>>>> prefect clone
 
 
 @kubernetes.command()
@@ -291,6 +304,15 @@ def start(image_pull_secrets=None, **kwargs):
     "-i",
     help="Name of image pull secrets to use for workloads.",
 )
+<<<<<<< HEAD
+=======
+@click.option(
+    "--resource-manager",
+    "resource_manager_enabled",
+    is_flag=True,
+    help="Enable resource manager.",
+)
+>>>>>>> prefect clone
 @click.option("--rbac", is_flag=True, help="Enable default RBAC.")
 @click.option("--latest", is_flag=True, help="Use the latest Prefect image.")
 @click.option("--mem-request", help="Requested memory for Prefect init job.")
@@ -317,6 +339,7 @@ def install(label, env, **kwargs):
 #################
 
 
+<<<<<<< HEAD
 def warn_fargate_deprecated():
     click.secho(
         "Warning: The Fargate agent is deprecated, please transition to using the ECS agent instead",
@@ -331,6 +354,11 @@ def fargate():
 
     The Fargate agent is deprecated, please transition to using the ECS agent instead.
     """
+=======
+@agent.group()
+def fargate():
+    """Manage Prefect Fargate agents."""
+>>>>>>> prefect clone
 
 
 @fargate.command(
@@ -339,6 +367,7 @@ def fargate():
 @add_options(COMMON_START_OPTIONS)
 @click.pass_context
 def start(ctx, **kwargs):
+<<<<<<< HEAD
     """Start a Fargate agent (DEPRECATED)
 
     The Fargate agent is deprecated, please transition to using the ECS agent instead.
@@ -347,11 +376,20 @@ def start(ctx, **kwargs):
 
     warn_fargate_deprecated()
 
+=======
+    """Start a Fargate agent"""
+    from prefect.agent.fargate import FargateAgent
+
+>>>>>>> prefect clone
     for item in ctx.args:
         k, v = item.replace("--", "").split("=", 2)
         kwargs[k] = v
 
+<<<<<<< HEAD
     start_agent(FargateAgent, _called_from_cli=True, **kwargs)
+=======
+    start_agent(FargateAgent, **kwargs)
+>>>>>>> prefect clone
 
 
 #############
@@ -380,10 +418,13 @@ def ecs():
     help="The default task role ARN to use for ECS tasks started by this agent.",
 )
 @click.option(
+<<<<<<< HEAD
     "--execution-role-arn",
     help="The default execution role ARN to use for ECS tasks started by this agent.",
 )
 @click.option(
+=======
+>>>>>>> prefect clone
     "--task-definition",
     "task_definition_path",
     help=(
@@ -445,8 +486,14 @@ _agents = {
 )
 @click.option(
     "--storage-labels/--no-storage-labels",
+<<<<<<< HEAD
     default=None,
     help="Add all storage labels to the LocalAgent. DEPRECATED",
+=======
+    default=True,
+    help="Add all storage labels to the LocalAgent",
+    hidden=True,
+>>>>>>> prefect clone
 )
 @click.option(
     "--hostname-label/--no-hostname-label",
@@ -550,8 +597,13 @@ def start(
     no_docker_interface,
     max_polls,
     agent_address,
+<<<<<<< HEAD
     hostname_label,
     storage_labels,
+=======
+    storage_labels,
+    hostname_label,
+>>>>>>> prefect clone
 ):
     """
     Start an agent.
@@ -599,6 +651,11 @@ def start(
                                     (available for Local and Docker agents only)
         --hostname-label            Add hostname to the Agent's labels
                                         (Default to True. Disable with --no-hostname-label option)
+<<<<<<< HEAD
+=======
+        --storage-labels            Add all storage labels to the Agent
+                                        (Default to True. Disable with --no-storage-labels option)
+>>>>>>> prefect clone
 
     \b
     Docker Agent:
@@ -639,6 +696,7 @@ def start(
         tmp_config["cloud.api"] = api
 
     with set_temporary_config(tmp_config):
+<<<<<<< HEAD
         retrieved_agent = _agents.get(agent_option)
 
         if not retrieved_agent:
@@ -656,6 +714,19 @@ def start(
                 fg="yellow",
                 err=True,
             )
+=======
+        retrieved_agent = _agents.get(agent_option, None)
+
+        if not retrieved_agent:
+            click.secho("{} is not a valid agent".format(agent_option), fg="red")
+            return
+
+        click.secho(
+            f"Warning: `prefect agent start {agent_option}` is deprecated, use "
+            f"`prefect agent {agent_option} start` instead",
+            fg="yellow",
+        )
+>>>>>>> prefect clone
 
         env_vars = dict()
         for env_var in env:
@@ -703,7 +774,10 @@ def start(
                 max_polls=max_polls,
                 no_cloud_logs=no_cloud_logs,
                 agent_address=agent_address,
+<<<<<<< HEAD
                 _called_from_cli=True,
+=======
+>>>>>>> prefect clone
                 **kwargs,
             ).start()
         elif agent_option == "kubernetes":
@@ -750,6 +824,12 @@ def start(
     help="Name of image pull secrets to use for workloads.",
     hidden=True,
 )
+<<<<<<< HEAD
+=======
+@click.option(
+    "--resource-manager", is_flag=True, help="Enable resource manager.", hidden=True
+)
+>>>>>>> prefect clone
 @click.option("--rbac", is_flag=True, help="Enable default RBAC.", hidden=True)
 @click.option(
     "--latest", is_flag=True, help="Use the latest Prefect image.", hidden=True
@@ -828,6 +908,10 @@ def install(
     api,
     namespace,
     image_pull_secrets,
+<<<<<<< HEAD
+=======
+    resource_manager,
+>>>>>>> prefect clone
     rbac,
     latest,
     mem_request,
@@ -870,6 +954,10 @@ def install(
         --api, -a                   TEXT    A Prefect API URL
         --namespace, -n             TEXT    Agent namespace to launch workloads
         --image-pull-secrets, -i    TEXT    Name of image pull secrets to use for workloads
+<<<<<<< HEAD
+=======
+        --resource-manager                  Enable resource manager on install
+>>>>>>> prefect clone
         --rbac                              Enable default RBAC on install
         --latest                            Use the `latest` Prefect image
         --mem-request               TEXT    Requested memory for Prefect init job
@@ -895,19 +983,29 @@ def install(
         "local": "prefect.agent.local.LocalAgent",
     }
 
+<<<<<<< HEAD
     retrieved_agent = supported_agents.get(name)
 
     if not retrieved_agent:
         click.secho(
             "{} is not a supported agent for `install`".format(name), fg="red", err=True
         )
+=======
+    retrieved_agent = supported_agents.get(name, None)
+
+    if not retrieved_agent:
+        click.secho("{} is not a supported agent for `install`".format(name), fg="red")
+>>>>>>> prefect clone
         return
 
     click.secho(
         f"Warning: `prefect agent install {name}` is deprecated, use "
         f"`prefect agent {name} install` instead",
         fg="yellow",
+<<<<<<< HEAD
         err=True,
+=======
+>>>>>>> prefect clone
     )
 
     env_vars = dict()
@@ -922,6 +1020,10 @@ def install(
             api=api,
             namespace=namespace,
             image_pull_secrets=image_pull_secrets,
+<<<<<<< HEAD
+=======
+            resource_manager_enabled=resource_manager,
+>>>>>>> prefect clone
             rbac=rbac,
             latest=latest,
             mem_request=mem_request,

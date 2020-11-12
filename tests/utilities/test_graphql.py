@@ -485,14 +485,14 @@ class TestFormatGraphQLResponseError:
             dedent(
                 """
                 The server did not provide any error messages.
-        
-        
+
+
                 The GraphQL query was:
-                    
+
                     example query
-                
+
                 The passed variables were:
-                
+
                     variable
                 """
             ).strip()
@@ -524,11 +524,11 @@ class TestFormatGraphQLResponseError:
                     CODEWITHOUTMESSAGE: No error message supplied.
 
                 The GraphQL query was:
-                
+
                     null
-                
+
                 The passed variables were:
-                
+
                     null
                 """
             ).strip()

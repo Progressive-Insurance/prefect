@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from typing import Any, Callable, Dict, Union, Set, Optional, overload
+=======
+from typing import Any, Callable, Dict, Union, Set, overload
+>>>>>>> prefect clone
 
 import prefect
 from prefect import Task, Flow
@@ -10,6 +14,7 @@ from prefect.engine import signals
 __all__ = ("resource_manager", "ResourceManager")
 
 
+<<<<<<< HEAD
 class ResourceInitTask(Task):
     """Initialize a resource manager class"""
 
@@ -18,6 +23,8 @@ class ResourceInitTask(Task):
         self.run = resource_class
 
 
+=======
+>>>>>>> prefect clone
 class ResourceSetupTask(Task):
     """Setup a resource with its resource manager"""
 
@@ -28,7 +35,11 @@ class ResourceSetupTask(Task):
 class ResourceCleanupTask(Task):
     """Cleanup a resource with its resource manager"""
 
+<<<<<<< HEAD
     def run(self, mgr: Any, resource: Any = None) -> None:
+=======
+    def run(self, mgr: Any, resource: Any) -> None:
+>>>>>>> prefect clone
         mgr.cleanup(resource)
 
 
@@ -67,11 +78,15 @@ class ResourceContext:
     """
 
     def __init__(
+<<<<<<< HEAD
         self,
         init_task: Task,
         setup_task: Optional[Task],
         cleanup_task: Task,
         flow: Flow,
+=======
+        self, init_task: Task, setup_task: Task, cleanup_task: Task, flow: Flow
+>>>>>>> prefect clone
     ):
         self.init_task = init_task
         self.setup_task = setup_task
@@ -92,7 +107,11 @@ class ResourceContext:
             )
         self._tasks.add(task)
 
+<<<<<<< HEAD
     def __enter__(self) -> Optional[Task]:
+=======
+    def __enter__(self) -> Task:
+>>>>>>> prefect clone
         self.__prev_resource = prefect.context.get("resource")
         prefect.context.update(resource=self)
         return self.setup_task
@@ -110,15 +129,23 @@ class ResourceContext:
             # the resource cleanup should be set as a downstream task.
             upstream = self._flow.upstream_tasks(child)
             if (
+<<<<<<< HEAD
                 self.setup_task is not None
                 and not self._tasks.intersection(upstream)
+=======
+                not self._tasks.intersection(upstream)
+>>>>>>> prefect clone
                 and self.setup_task not in upstream
             ):
                 child.set_upstream(self.setup_task, flow=self._flow)
             downstream = self._flow.downstream_tasks(child)
             if (
+<<<<<<< HEAD
                 self.cleanup_task is not None
                 and not self._tasks.intersection(downstream)
+=======
+                not self._tasks.intersection(downstream)
+>>>>>>> prefect clone
                 and self.cleanup_task not in downstream
             ):
                 child.set_downstream(self.cleanup_task, flow=self._flow)
@@ -202,11 +229,17 @@ class ResourceManager:
         self.name = name
         self.init_task_kwargs.setdefault("name", name)
         self.setup_task_kwargs.setdefault("name", f"{name}.setup")
+<<<<<<< HEAD
         self.setup_task_kwargs.setdefault("checkpoint", False)
         self.cleanup_task_kwargs.setdefault("name", f"{name}.cleanup")
         self.cleanup_task_kwargs.setdefault("trigger", resource_cleanup_trigger)
         self.cleanup_task_kwargs.setdefault("skip_on_upstream_skip", False)
         self.cleanup_task_kwargs.setdefault("checkpoint", False)
+=======
+        self.cleanup_task_kwargs.setdefault("name", f"{name}.cleanup")
+        self.cleanup_task_kwargs.setdefault("trigger", resource_cleanup_trigger)
+        self.cleanup_task_kwargs.setdefault("skip_on_upstream_skip", False)
+>>>>>>> prefect clone
 
     def __call__(self, *args: Any, flow: Flow = None, **kwargs: Any) -> ResourceContext:
         if flow is None:
@@ -214,6 +247,7 @@ class ResourceManager:
             if flow is None:
                 raise ValueError("Could not infer an active Flow context.")
 
+<<<<<<< HEAD
         init_task = ResourceInitTask(self.resource_class, **self.init_task_kwargs)(  # type: ignore
             *args, flow=flow, **kwargs
         )
@@ -230,6 +264,17 @@ class ResourceManager:
             cleanup_task = ResourceCleanupTask(**self.cleanup_task_kwargs)(
                 init_task, flow=flow
             )
+=======
+        init_task = prefect.task(self.resource_class, **self.init_task_kwargs)(  # type: ignore
+            *args, flow=flow, **kwargs
+        )
+
+        setup_task = ResourceSetupTask(**self.setup_task_kwargs)(init_task, flow=flow)
+
+        cleanup_task = ResourceCleanupTask(**self.cleanup_task_kwargs)(
+            init_task, setup_task, flow=flow
+        )
+>>>>>>> prefect clone
 
         return ResourceContext(init_task, setup_task, cleanup_task, flow)
 
@@ -270,6 +315,7 @@ def resource_manager(
     """A decorator for creating a `ResourceManager` object.
 
     Used as a context manager, `ResourceManager` objects create tasks to setup
+<<<<<<< HEAD
     and/or cleanup temporary objects used within a block of tasks.  Examples
     might include temporary Dask/Spark clusters, Docker containers, etc...
 
@@ -283,6 +329,20 @@ def resource_manager(
                 resource. This takes the return value from `setup` (or `None`
                 if no `setup` method) and shouldn't return anything.
         - A `setup` task, which calls the optional `setup` method on the `ResourceManager`
+=======
+    and cleanup temporary objects used within a block of tasks.  Examples might
+    include temporary Dask/Spark clusters, Docker containers, etc...
+
+    Through usage a ResourceManager object adds three tasks to the graph:
+        - A `init` task, which returns an object that meets the `ResourceManager`
+          protocol. This protocol requires two methods:
+            * `setup(self) -> resource`: A method for creating the resource.
+                The return value from this will available to user tasks.
+            * `cleanup(self, resource) -> None`: A method for cleaning up the
+                resource.  This takes the return value from `setup` and
+                shouldn't return anything.
+        - A `setup` task, which calls the `setup` method on the `ResourceManager`
+>>>>>>> prefect clone
         - A `cleanup` task, which calls the `cleanup` method on the `ResourceManager`.
 
     Args:
@@ -292,7 +352,11 @@ def resource_manager(
         - init_task_kwargs (dict, optional): keyword arguments that will be
             passed to the `Task` constructor for the `init` task.
         - setup_task_kwargs (dict, optional): keyword arguments that will be
+<<<<<<< HEAD
             passed to the `Task` constructor for the optional `setup` task.
+=======
+            passed to the `Task` constructor for the `setup` task.
+>>>>>>> prefect clone
         - cleanup_task_kwargs (dict, optional): keyword arguments that will be
             passed to the `Task` constructor for the `cleanup` task.
 

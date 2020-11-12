@@ -18,7 +18,11 @@ import prefect
 from prefect import config
 from prefect.core import Edge, Task
 from prefect.engine import signals
+<<<<<<< HEAD
 from prefect.engine.result.base import Result, ResultNotImplementedError
+=======
+from prefect.engine.result import Result
+>>>>>>> prefect clone
 from prefect.engine.runner import ENDRUN, Runner, call_state_handlers
 from prefect.engine.state import (
     Cached,
@@ -889,7 +893,11 @@ class TaskRunner(Runner):
                     **raw_inputs,
                 }
                 result = self.result.write(value, **formatting_kwargs)
+<<<<<<< HEAD
             except ResultNotImplementedError:
+=======
+            except NotImplementedError:
+>>>>>>> prefect clone
                 result = self.result.from_value(value=value)
         else:
             result = self.result.from_value(value=value)
@@ -978,7 +986,11 @@ class TaskRunner(Runner):
                         loop_result = self.result.write(
                             loop_result.value, **formatting_kwargs
                         )
+<<<<<<< HEAD
                     except ResultNotImplementedError:
+=======
+                    except NotImplementedError:
+>>>>>>> prefect clone
                         pass
 
                 state_context = {"_loop_count": prefect.context["task_loop_count"]}

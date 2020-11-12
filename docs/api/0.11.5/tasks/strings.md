@@ -11,7 +11,11 @@ This task contains a template which is formatted with the results of any upstrea
 
 Variables from `prefect.context` are also available for formatting.
 
+<<<<<<< HEAD
 **Args**:     <ul class="args"><li class="args">`template (str, optional)`: the optional _default_ template string to format at runtime;         can also be provided as a keyword to `run`, which takes precedence over this default.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task constructor</li></ul>**Example**:
+=======
+**Args**:     <ul class="args"><li class="args">`template (str, optional)`: the optional _default_ template string to format at runtime;         can also be provided as a keyword to `run`, which takes precendence over this default.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task constructor</li></ul>**Example**:
+>>>>>>> prefect clone
 
 
 ```python
@@ -49,7 +53,11 @@ This task contains a Jinja template which is formatted with the results of any u
 
 Variables from `prefect.context` will also be used for rendering.
 
+<<<<<<< HEAD
 **Args**:     <ul class="args"><li class="args">`template (str, optional)`: the optional _default_ template string to render at runtime;         can also be provided as a keyword to `run`, which takes precedence over this default.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task constructor</li></ul>**Example**:
+=======
+**Args**:     <ul class="args"><li class="args">`template (str, optional)`: the optional _default_ template string to render at runtime;         can also be provided as a keyword to `run`, which takes precendence over this default.     </li><li class="args">`**kwargs (optional)`: additional keyword arguments to pass to the         standard Task constructor</li></ul>**Example**:
+>>>>>>> prefect clone
 
 
 ```python
@@ -82,4 +90,8 @@ print(flow_state.result[output].result)
 <br>
 
 
+<<<<<<< HEAD
 <p class="auto-gen">This documentation was auto-generated from commit <a href='https://github.com/PrefectHQ/prefect/commit/n/a'>n/a</a> </br>on June 17, 2020 at 17:27 UTC</p>
+=======
+<p class="auto-gen">This documentation was auto-generated from commit <a href='https://github.com/PrefectHQ/prefect/commit/n/a'>n/a</a> </br>on June 17, 2020 at 17:27 UTC</p>
+>>>>>>> prefect clone

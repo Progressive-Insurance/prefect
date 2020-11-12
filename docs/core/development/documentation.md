@@ -12,7 +12,7 @@ Markdown. For details on properly formatting your docstrings, please see the
 
 Modules, functions, and classes must be explicitly added to the auto-generated
 documentation. First, update the `docs/outline.toml` file with the following
-information: 
+information:
 
 - a TOML header with the path to the generated Markdown file (e.g. `pages.utilities.example`)
 - `title` (str): the title of the generated docs page
@@ -89,7 +89,7 @@ Other Prefect terms, like "flow" or "task", should generally not be capitalized 
 >
 > In order to manage data serialization, users can specify one or more `ResultHandlers` for their flows and tasks.
 >
-> Prefect uses a rich state system to communicate information between tasks. Each `State` has multiple attributes, including an informative message. 
+> Prefect uses a rich state system to communicate information between tasks. Each `State` has multiple attributes, including an informative message.
 
 ## Previewing docs locally
 

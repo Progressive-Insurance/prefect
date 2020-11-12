@@ -6,5 +6,9 @@ try:
     from prefect.tasks.mysql.mysql import MySQLExecute, MySQLFetch
 except ImportError as import_error:
     raise ImportError(
+<<<<<<< HEAD
         'Using `prefect.tasks.mysql` requires Prefect to be installed with the "mysql" extra.'
+=======
+        'Using `prefect.contrib.tasks.mysql` requires Prefect to be installed with the "mysql" extra.'
+>>>>>>> prefect clone
     ) from import_error

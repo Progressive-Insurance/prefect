@@ -17,6 +17,7 @@ def test_serialize_flow():
     assert serialized["name"] == "n"
 
 
+<<<<<<< HEAD
 def test_serialize_flow_sorts_nested_schemas():
     a = Parameter("a", default=1)
     b = Parameter("b", default=2)
@@ -41,6 +42,8 @@ def test_serialize_flow_sorts_nested_schemas():
     assert [task["slug"] for task in serialized["reference_tasks"]] == ["c-1", "d-1"]
 
 
+=======
+>>>>>>> prefect clone
 def test_deserialize_flow():
     serialized = FlowSchema().dump(Flow(name="n"))
     deserialized = FlowSchema().load(serialized)
@@ -162,18 +165,30 @@ def test_reference_tasks():
 
 
 def test_serialize_container_environment():
+<<<<<<< HEAD
     storage = prefect.storage.Docker(
+=======
+    storage = prefect.environments.storage.Docker(
+>>>>>>> prefect clone
         base_image="a", python_dependencies=["b", "c"], registry_url="f"
     )
     deserialized = FlowSchema().load(
         FlowSchema().dump(Flow(name="test", storage=storage))
     )
+<<<<<<< HEAD
     assert isinstance(deserialized.storage, prefect.storage.Docker)
+=======
+    assert isinstance(deserialized.storage, prefect.environments.storage.Docker)
+>>>>>>> prefect clone
     assert deserialized.storage.registry_url == storage.registry_url
 
 
 def test_deserialize_serialized_flow_after_build(tmpdir):
+<<<<<<< HEAD
     flow = Flow(name="test", storage=prefect.storage.Local(tmpdir))
+=======
+    flow = Flow(name="test", storage=prefect.environments.storage.Local(tmpdir))
+>>>>>>> prefect clone
     serialized_flow = flow.serialize(build=True)
     deserialized = FlowSchema().load(serialized_flow)
     assert isinstance(deserialized, Flow)

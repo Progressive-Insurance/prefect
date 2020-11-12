@@ -126,10 +126,17 @@ class AzureResult(Result):
             client = self.service.get_blob_client(
                 container=self.container, blob=location
             )
+<<<<<<< HEAD
             content_bytes = client.download_blob().content_as_bytes()
 
             try:
                 new.value = new.serializer.deserialize(content_bytes)
+=======
+            content_string = client.download_blob()
+
+            try:
+                new.value = new.serializer.deserialize(content_string)
+>>>>>>> prefect clone
             except EOFError:
                 new.value = None
             self.logger.debug("Finished downloading result from {}.".format(location))

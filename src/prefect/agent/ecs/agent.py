@@ -8,6 +8,10 @@ import yaml
 from prefect import config
 from prefect.agent import Agent
 from prefect.run_configs import ECSRun
+<<<<<<< HEAD
+=======
+from prefect.serialization.run_config import RunConfigSchema
+>>>>>>> prefect clone
 from prefect.utilities.agent import get_flow_image, get_flow_run_command
 from prefect.utilities.filesystems import read_bytes_from_path
 from prefect.utilities.graphql import GraphQLResult
@@ -121,8 +125,11 @@ class ECSAgent(Agent):
             `"FARGATE"` (default) or `"EC2"`.
         - task_role_arn (str, optional): The default task role ARN to use when
             registering ECS tasks created by this agent.
+<<<<<<< HEAD
         - execution_role_arn (str, optional): The default execution role ARN
             to use when registering ECS tasks created by this agent.
+=======
+>>>>>>> prefect clone
         - botocore_config (dict, optional): Additional botocore configuration
             options to be passed to the boto3 client. See [the boto3
             configuration docs][2] for more information.
@@ -151,7 +158,10 @@ class ECSAgent(Agent):
         cluster: str = None,
         launch_type: str = None,
         task_role_arn: str = None,
+<<<<<<< HEAD
         execution_role_arn: str = None,
+=======
+>>>>>>> prefect clone
         botocore_config: dict = None,
     ) -> None:
         super().__init__(
@@ -170,7 +180,10 @@ class ECSAgent(Agent):
         self.cluster = cluster
         self.launch_type = launch_type.upper() if launch_type else "FARGATE"
         self.task_role_arn = task_role_arn
+<<<<<<< HEAD
         self.execution_role_arn = execution_role_arn
+=======
+>>>>>>> prefect clone
 
         # Load boto configuration. We want to use the standard retry mode by
         # default (which isn't boto's default due to backwards compatibility).
@@ -233,11 +246,14 @@ class ECSAgent(Agent):
         if self.task_role_arn:
             self.task_definition["taskRoleArn"] = self.task_role_arn
 
+<<<<<<< HEAD
         # If `execution_role_arn` is configured on the agent, add it to the
         # default task definition template.
         if self.execution_role_arn:
             self.task_definition["executionRoleArn"] = self.execution_role_arn
 
+=======
+>>>>>>> prefect clone
         # If running on fargate, auto-configure `networkConfiguration` for the
         # user if they didn't configure it themselves.
         if self.launch_type == "FARGATE" and not self.run_task_kwargs.get(
@@ -299,10 +315,34 @@ class ECSAgent(Agent):
         """
         self.logger.info("Deploying flow run %r", flow_run.id)
 
+<<<<<<< HEAD
         run_config = self._get_run_config(flow_run, ECSRun)
         assert isinstance(run_config, ECSRun)  # mypy
 
         taskdef_arn = self.get_task_definition_arn(flow_run, run_config)
+=======
+        # Load and validate the flow's run_config
+        if getattr(flow_run.flow, "run_config", None) is not None:
+            run_config = RunConfigSchema().load(flow_run.flow.run_config)
+            if not isinstance(run_config, ECSRun):
+                self.logger.error(
+                    "Flow run %s has a `run_config` of type `%s`, only `ECSRun` is supported",
+                    flow_run.id,
+                    type(run_config).__name__,
+                )
+                raise TypeError(
+                    "Unsupported RunConfig type: %s" % type(run_config).__name__
+                )
+        else:
+            self.logger.error(
+                "Flow run %s has a null `run_config`, only `ECSRun` is supported",
+                flow_run.id,
+            )
+            raise ValueError("Flow is missing a `run_config`")
+
+        # Check if a task definition already exists
+        taskdef_arn = self.lookup_task_definition_arn(flow_run)
+>>>>>>> prefect clone
         if taskdef_arn is None:
             # Register a new task definition
             self.logger.debug(
@@ -350,6 +390,7 @@ class ECSAgent(Agent):
             "prefect:flow-version": str(flow_run.flow.version),
         }
 
+<<<<<<< HEAD
     def get_task_definition_arn(
         self, flow_run: GraphQLResult, run_config: ECSRun
     ) -> Optional[str]:
@@ -358,14 +399,24 @@ class ECSAgent(Agent):
         Args:
             - flow_run (GraphQLResult): the flow run
             - run_config (ECSRun): The flow's run config
+=======
+    def lookup_task_definition_arn(self, flow_run: GraphQLResult) -> Optional[str]:
+        """Lookup an existing task definition ARN for a flow run.
+
+        Args:
+            - flow_run (GraphQLResult): the flow run
+>>>>>>> prefect clone
 
         Returns:
             - Optional[str]: the task definition ARN. Returns `None` if no
                 existing definition is found.
         """
+<<<<<<< HEAD
         if run_config.task_definition_arn is not None:
             return run_config.task_definition_arn
 
+=======
+>>>>>>> prefect clone
         tags = self.get_task_definition_tags(flow_run)
 
         from botocore.exceptions import ClientError
@@ -433,7 +484,11 @@ class ECSAgent(Agent):
             containers.append(container)
 
         # Set flow image
+<<<<<<< HEAD
         container["image"] = image = get_flow_image(flow_run)
+=======
+        container["image"] = get_flow_image(flow_run)
+>>>>>>> prefect clone
 
         # Set flow run command
         container["command"] = ["/bin/sh", "-c", get_flow_run_command(flow_run)]
@@ -442,17 +497,23 @@ class ECSAgent(Agent):
         if run_config.task_role_arn:
             taskdef["taskRoleArn"] = run_config.task_role_arn
 
+<<<<<<< HEAD
         # Set executionRoleArn if configured
         if run_config.execution_role_arn:
             taskdef["executionRoleArn"] = run_config.execution_role_arn
 
+=======
+>>>>>>> prefect clone
         # Populate static environment variables from the following sources,
         # with precedence:
         # - Static environment variables, hardcoded below
         # - Values in the task definition template
         env = {
             "PREFECT__CLOUD__USE_LOCAL_SECRETS": "false",
+<<<<<<< HEAD
             "PREFECT__CONTEXT__IMAGE": image,
+=======
+>>>>>>> prefect clone
             "PREFECT__ENGINE__FLOW_RUNNER__DEFAULT_CLASS": "prefect.engine.cloud.CloudFlowRunner",
             "PREFECT__ENGINE__TASK_RUNNER__DEFAULT_CLASS": "prefect.engine.cloud.CloudTaskRunner",
         }

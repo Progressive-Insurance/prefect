@@ -28,7 +28,7 @@ If you'd like to kick the tires on Dask locally, you can [install Dask distribut
 > dask-worker tcp://10.0.0.41:8786
 ```
 
-Once you have a cluster up and running, let's deploy a very basic flow that runs on this cluster. This example makes the classic "diamond shape" of a flow, where many tasks run in parallel and are bottlenecked by a final task that depends on their upstream states. This type of flow benefits greatly from the parallelism supported by an executor like Dask. 
+Once you have a cluster up and running, let's deploy a very basic flow that runs on this cluster. This example makes the classic "diamond shape" of a flow, where many tasks run in parallel and are bottlenecked by a final task that depends on their upstream states. This type of flow benefits greatly from the parallelism supported by an executor like Dask.
 
 ```python
 from prefect import task, Flow

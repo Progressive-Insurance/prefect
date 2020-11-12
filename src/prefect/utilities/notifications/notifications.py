@@ -219,7 +219,11 @@ def gmail_notifier(
     ignore_states = ignore_states or []
     only_states = only_states or []
 
+<<<<<<< HEAD
     if any(isinstance(new_state, ignored) for ignored in ignore_states):
+=======
+    if any([isinstance(new_state, ignored) for ignored in ignore_states]):
+>>>>>>> prefect clone
         return new_state
 
     if only_states and not any(
@@ -297,7 +301,11 @@ def slack_notifier(
     ignore_states = ignore_states or []
     only_states = only_states or []
 
+<<<<<<< HEAD
     if any(isinstance(new_state, ignored) for ignored in ignore_states):
+=======
+    if any([isinstance(new_state, ignored) for ignored in ignore_states]):
+>>>>>>> prefect clone
         return new_state
 
     if only_states and not any(

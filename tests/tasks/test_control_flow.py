@@ -2,6 +2,10 @@ import pytest
 
 import prefect
 from prefect import Flow, Task, task, Parameter
+<<<<<<< HEAD
+=======
+from prefect.engine.result import NoResult
+>>>>>>> prefect clone
 from prefect.engine.state import Skipped, Success
 from prefect.tasks.control_flow import FilterTask, ifelse, merge, switch, case
 from prefect.tasks.control_flow.conditional import CompareValue
@@ -377,16 +381,26 @@ class TestFilterTask:
 
     def test_default_filter_func_filters_noresults_and_exceptions(self):
         task = FilterTask()
+<<<<<<< HEAD
         res = task.run([None, 0, 1, 5, "", ValueError()])
+=======
+        res = task.run([NoResult, NoResult, 0, 1, 5, "", ValueError()])
+>>>>>>> prefect clone
         assert len(res) == 4
         assert res == [0, 1, 5, ""]
 
     def test_filter_func_can_be_changed(self):
         task = FilterTask(filter_func=lambda r: r != 5)
         exc = ValueError()
+<<<<<<< HEAD
         res = task.run([None, 0, 1, 5, "", exc])
         assert len(res) == 5
         assert res == [None, 0, 1, "", exc]
+=======
+        res = task.run([NoResult, NoResult, 0, 1, 5, "", exc])
+        assert len(res) == 6
+        assert res == [NoResult, NoResult, 0, 1, "", exc]
+>>>>>>> prefect clone
 
 
 @task

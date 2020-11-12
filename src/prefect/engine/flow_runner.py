@@ -189,7 +189,11 @@ class FlowRunner(Runner):
         return_tasks: Iterable[Task] = None,
         parameters: Dict[str, Any] = None,
         task_runner_state_handlers: Iterable[Callable] = None,
+<<<<<<< HEAD
         executor: "prefect.executors.Executor" = None,
+=======
+        executor: "prefect.engine.executors.Executor" = None,
+>>>>>>> prefect clone
         context: Dict[str, Any] = None,
         task_contexts: Dict[Task, Dict[str, Any]] = None,
     ) -> State:
@@ -367,7 +371,11 @@ class FlowRunner(Runner):
         task_contexts: Dict[Task, Dict[str, Any]],
         return_tasks: Set[Task],
         task_runner_state_handlers: Iterable[Callable],
+<<<<<<< HEAD
         executor: "prefect.executors.base.Executor",
+=======
+        executor: "prefect.engine.executors.base.Executor",
+>>>>>>> prefect clone
     ) -> State:
         """
         Runs the flow.
@@ -427,6 +435,7 @@ class FlowRunner(Runner):
                 ):
                     task_states[task] = task_state = Success(result=task.value)
 
+<<<<<<< HEAD
                 # Always restart completed resource setup/cleanup tasks and
                 # secret tasks unless they were explicitly cached.
                 # TODO: we only need to rerun these tasks if any pending
@@ -446,6 +455,8 @@ class FlowRunner(Runner):
                 ):
                     task_states[task] = task_state = Pending()
 
+=======
+>>>>>>> prefect clone
                 # if the state is finished, don't run the task, just use the provided state if
                 # the state is cached / mapped, we still want to run the task runner pipeline
                 # steps to either ensure the cache is still valid / or to recreate the mapped
@@ -511,7 +522,11 @@ class FlowRunner(Runner):
                     )
 
                 # handle mapped tasks
+<<<<<<< HEAD
                 if any(edge.mapped for edge in upstream_states.keys()):
+=======
+                if any([edge.mapped for edge in upstream_states.keys()]):
+>>>>>>> prefect clone
 
                     # wait on upstream states to determine the width of the pipeline
                     # this is the key to depth-first execution

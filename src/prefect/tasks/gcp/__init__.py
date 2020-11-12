@@ -10,7 +10,11 @@ Note that these tasks allow for a wide range of custom usage patterns, such as:
 All GCP related tasks can be authenticated using the `GCP_CREDENTIALS` Prefect Secret.  See [Third Party Authentication](../../../orchestration/recipes/third_party_auth.html) for more information.
 """
 try:
+<<<<<<< HEAD
     from prefect.tasks.gcp.storage import GCSDownload, GCSUpload, GCSCopy, GCSBlobExists
+=======
+    from prefect.tasks.gcp.storage import GCSDownload, GCSUpload, GCSCopy
+>>>>>>> prefect clone
     from prefect.tasks.gcp.bigquery import (
         BigQueryTask,
         BigQueryLoadGoogleCloudStorage,

@@ -222,7 +222,7 @@ Note that `flow.replace` preserves edges - this means the old and new tasks need
 :::
 
 
-### Resuming failing Flows 
+### Resuming failing Flows
 
 Sometimes flows fail, and so it can be useful to interactively debug them from the command line.  The Prefect API provides a number of different ways of achieving this:
 
@@ -252,7 +252,7 @@ with Flow("Success/Failure") as flow:
 
     a_great_number = i_will_take_forever()
     failure(a_great_number)
-    
+
 ```
 
 Running this flow in an `iPython` command shell fails
@@ -261,9 +261,9 @@ Running this flow in an `iPython` command shell fails
 flow.run()
 ```
 
-Swapping out `1/0` with `1/1` in the task `failure()` using `flow.replace` would fix this error, however, rerunning the whole flow including the slow `i_will_take_forever` is unncessary.  
+Swapping out `1/0` with `1/1` in the task `failure()` using `flow.replace` would fix this error, however, rerunning the whole flow including the slow `i_will_take_forever` is unncessary.
 
-Every time a Prefect flow is run, the `state` of the flow after it is run is returned.  The flow run `state` result is a dictionary whose keys are `Task` objects and whose values are the states of those tasks after the run is complete.  
+Every time a Prefect flow is run, the `state` of the flow after it is run is returned.  The flow run `state` result is a dictionary whose keys are `Task` objects and whose values are the states of those tasks after the run is complete.
 
 ```python
 from prefect.engine.state import Success

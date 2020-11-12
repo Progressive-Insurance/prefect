@@ -25,10 +25,13 @@ def test_serialize_task():
     assert isinstance(TaskSchema().dump(Task()), dict)
 
 
+<<<<<<< HEAD
 def test_serialize_task_sorts_tags():
     assert TaskSchema().dump(Task(tags=["b", "a", "c"]))["tags"] == ["a", "b", "c"]
 
 
+=======
+>>>>>>> prefect clone
 def test_deserialize_task():
     task = Task(
         name="hi",
@@ -109,6 +112,7 @@ def test_serialize_parameter():
     assert ps["required"] is True
 
 
+<<<<<<< HEAD
 def test_serialize_parameter_sorts_tags():
     assert TaskSchema().dump(Parameter(name="p", tags=["b", "a", "c"]))["tags"] == [
         "a",
@@ -117,6 +121,8 @@ def test_serialize_parameter_sorts_tags():
     ]
 
 
+=======
+>>>>>>> prefect clone
 def test_deserialize_parameter():
     p = Parameter(name="p")
     p2 = ParameterSchema().load(ParameterSchema().dump(p))

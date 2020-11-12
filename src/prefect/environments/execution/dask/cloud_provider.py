@@ -5,12 +5,17 @@ import prefect
 from distributed.deploy.cluster import Cluster
 from distributed.security import Security
 from prefect import Client
+<<<<<<< HEAD
 from prefect.environments.execution import Environment
+=======
+from prefect.environments.execution.dask.remote import RemoteDaskEnvironment
+>>>>>>> prefect clone
 
 if TYPE_CHECKING:
     from prefect.core.flow import Flow  # pylint: disable=W0611
 
 
+<<<<<<< HEAD
 class DaskCloudProviderEnvironment(Environment):
     """
     DaskCloudProviderEnvironment creates Dask clusters using the Dask Cloud Provider
@@ -24,6 +29,15 @@ class DaskCloudProviderEnvironment(Environment):
     flow will run using a `DaskExecutor` with the Dask scheduler address from the newly
     created Dask cluster. You can specify the number of Dask workers manually
     (for example, passing the kwarg `n_workers`) or enable adaptive mode by
+=======
+class DaskCloudProviderEnvironment(RemoteDaskEnvironment):
+    """
+    DaskCloudProviderEnvironment creates Dask clusters using the Dask Cloud Provider
+    project. For each flow run, a new Dask cluster will be dynamically created and the
+    flow will run using a `RemoteDaskEnvironment` with the Dask scheduler address
+    from the newly created Dask cluster. You can specify the number of Dask workers
+    manually (for example, passing the kwarg `n_workers`) or enable adaptive mode by
+>>>>>>> prefect clone
     passing `adaptive_min_workers` and, optionally, `adaptive_max_workers`. This
     environment aims to provide a very easy path to Dask scalability for users of
     cloud platforms, like AWS.
@@ -106,7 +120,10 @@ class DaskCloudProviderEnvironment(Environment):
         self._adaptive_max_workers = adaptive_max_workers
         self._on_execute = on_execute
         self._provider_kwargs = kwargs
+<<<<<<< HEAD
         self.executor_kwargs = (executor_kwargs or {}).copy()
+=======
+>>>>>>> prefect clone
         if "skip_cleanup" not in self._provider_kwargs:
             # Prefer this default (if not provided) to avoid deregistering task definitions See
             # this issue in Dask Cloud Provider:
@@ -119,15 +136,26 @@ class DaskCloudProviderEnvironment(Environment):
             # Client when it connects to the scheduler after cluster creation. So we
             # put it in _provider_kwargs so it gets passed to the Dask Cloud Provider's constructor
             self._provider_kwargs["security"] = self._security
+<<<<<<< HEAD
             self.executor_kwargs["client_kwargs"] = {"security": self._security}
 
         self.cluster = None
 
         super().__init__(
+=======
+        self.cluster = None
+        super().__init__(
+            address="",  # The scheduler address will be set after cluster creation
+            executor_kwargs=executor_kwargs,
+>>>>>>> prefect clone
             labels=labels,
             on_start=on_start,
             on_exit=on_exit,
             metadata=metadata,
+<<<<<<< HEAD
+=======
+            security=self._security,
+>>>>>>> prefect clone
         )
 
     @property
@@ -167,6 +195,7 @@ class DaskCloudProviderEnvironment(Environment):
     def execute(  # type: ignore
         self, flow: "Flow", **kwargs: Any  # type: ignore
     ) -> None:
+<<<<<<< HEAD
         """
         Execute a flow run on a dask-cloudprovider cluster.
 
@@ -174,6 +203,8 @@ class DaskCloudProviderEnvironment(Environment):
             - flow (Flow): the Flow object
             - **kwargs (Any): Unused
         """
+=======
+>>>>>>> prefect clone
         flow_run_info = None
         flow_run_id = prefect.context.get("flow_run_id")
         if self._on_execute:
@@ -233,6 +264,7 @@ class DaskCloudProviderEnvironment(Environment):
                 self.executor_kwargs["address"]
             )
         )
+<<<<<<< HEAD
         if self.on_start:
             self.on_start()
 
@@ -250,3 +282,6 @@ class DaskCloudProviderEnvironment(Environment):
         finally:
             if self.on_exit:
                 self.on_exit()
+=======
+        super().execute(flow, **kwargs)
+>>>>>>> prefect clone

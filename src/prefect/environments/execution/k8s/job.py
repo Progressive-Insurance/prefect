@@ -1,6 +1,10 @@
 import copy
 import os
 import uuid
+<<<<<<< HEAD
+=======
+import warnings
+>>>>>>> prefect clone
 from typing import Any, Callable, List, TYPE_CHECKING
 
 import yaml
@@ -18,10 +22,13 @@ class KubernetesJobEnvironment(Environment, _RunMixin):
     KubernetesJobEnvironment is an environment which deploys your flow as a Kubernetes
     job. This environment allows (and requires) a custom job YAML spec to be provided.
 
+<<<<<<< HEAD
     DEPRECATED: Environment based configuration is deprecated, please transition to
     configuring `flow.run_config` instead of `flow.environment`. See
     https://docs.prefect.io/orchestration/flow_config/overview.html for more info.
 
+=======
+>>>>>>> prefect clone
     When providing a custom YAML job spec the first container in the spec must be the
     container that the flow runner will be executed on.
 
@@ -50,6 +57,10 @@ class KubernetesJobEnvironment(Environment, _RunMixin):
             with this environment. Defaults to `False`
         - executor (Executor, optional): the executor to run the flow with. If not provided, the
             default executor will be used.
+<<<<<<< HEAD
+=======
+        - executor_kwargs (dict, optional): DEPRECATED
+>>>>>>> prefect clone
         - labels (List[str], optional): a list of labels, which are arbitrary string
             identifiers used by Prefect Agents when polling for work
         - on_start (Callable, optional): a function callback which will be called before the
@@ -63,7 +74,12 @@ class KubernetesJobEnvironment(Environment, _RunMixin):
         self,
         job_spec_file: str = None,
         unique_job_name: bool = False,
+<<<<<<< HEAD
         executor: "prefect.executors.Executor" = None,
+=======
+        executor: "prefect.engine.executors.Executor" = None,
+        executor_kwargs: dict = None,
+>>>>>>> prefect clone
         labels: List[str] = None,
         on_start: Callable = None,
         on_exit: Callable = None,
@@ -72,9 +88,21 @@ class KubernetesJobEnvironment(Environment, _RunMixin):
         self.job_spec_file = os.path.abspath(job_spec_file) if job_spec_file else None
         self.unique_job_name = unique_job_name
 
+<<<<<<< HEAD
         if executor is None:
             executor = prefect.engine.get_default_executor_class()()
         elif not isinstance(executor, prefect.executors.Executor):
+=======
+        if executor_kwargs is not None:
+            warnings.warn(
+                "`executor_kwargs` is deprecated, use `executor` instead", stacklevel=2
+            )
+        if executor is None:
+            executor = prefect.engine.get_default_executor_class()(
+                **(executor_kwargs or {})
+            )
+        elif not isinstance(executor, prefect.engine.executors.Executor):
+>>>>>>> prefect clone
             raise TypeError(
                 f"`executor` must be an `Executor` or `None`, got `{executor}`"
             )

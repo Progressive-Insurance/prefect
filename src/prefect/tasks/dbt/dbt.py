@@ -10,9 +10,12 @@ class DbtShellTask(ShellTask):
     """
     Task for running dbt commands. It will create a profiles.yml file prior to running dbt commands.
 
+<<<<<<< HEAD
     This task inherits all configuration options from the
     [ShellTask](https://docs.prefect.io/api/latest/tasks/shell.html#shelltask).
 
+=======
+>>>>>>> prefect clone
     Args:
         - command (string, optional): dbt command to be executed; can also be
             provided post-initialization by calling this task instance
@@ -33,7 +36,11 @@ class DbtShellTask(ShellTask):
         - helper_script (str, optional): a string representing a shell script, which
             will be executed prior to the `command` in the same process. Can be used to
             change directories, define helper functions, etc. when re-using this Task
+<<<<<<< HEAD
             for different commands in a Flow; can also be provided at runtime
+=======
+            for different commands in a Flow
+>>>>>>> prefect clone
         - shell (string, optional): shell to run the command with; defaults to "bash"
         - return_all (bool, optional): boolean specifying whether this task should return all
             lines of stdout as a list, or just the last line as a string; defaults to `False`
@@ -45,7 +52,11 @@ class DbtShellTask(ShellTask):
     Example:
         ```python
         from prefect import Flow
+<<<<<<< HEAD
         from prefect.tasks.dbt import DbtShellTask
+=======
+        from ccde.prefect.tasks.dbt import DbtShellTask
+>>>>>>> prefect clone
 
         with Flow(name="dbt_flow") as f:
             task = DbtShellTask(
@@ -97,6 +108,7 @@ class DbtShellTask(ShellTask):
             log_stderr=log_stderr
         )
 
+<<<<<<< HEAD
     @defaults_from_attrs("command", "env", "helper_script", "dbt_kwargs")
     def run(
         self,
@@ -104,6 +116,11 @@ class DbtShellTask(ShellTask):
         env: dict = None,
         helper_script: str = None,
         dbt_kwargs: dict = None,
+=======
+    @defaults_from_attrs("command", "env", "dbt_kwargs")
+    def run(
+        self, command: str = None, env: dict = None, dbt_kwargs: dict = None
+>>>>>>> prefect clone
     ) -> str:
         """
         If no profiles.yml file is found or if overwrite_profiles flag is set to True, this
@@ -117,10 +134,13 @@ class DbtShellTask(ShellTask):
                 runs in
             - env (dict, optional): dictionary of environment variables to use for
                 the subprocess
+<<<<<<< HEAD
             - helper_script (str, optional): a string representing a shell script, which
                 will be executed prior to the `command` in the same process. Can be used to
                 change directories, define helper functions, etc. when re-using this Task
                 for different commands in a Flow
+=======
+>>>>>>> prefect clone
              - dbt_kwargs(dict, optional): keyword arguments used to populate the profiles.yml file
 
         Returns:
@@ -179,6 +199,10 @@ class DbtShellTask(ShellTask):
         if self.set_profiles_envar:
             os.environ["DBT_PROFILES_DIR"] = self.profiles_dir
 
+<<<<<<< HEAD
         return super(DbtShellTask, self).run(
             command=command, env=env, helper_script=helper_script
         )
+=======
+        return super(DbtShellTask, self).run(command=command, env=env)
+>>>>>>> prefect clone

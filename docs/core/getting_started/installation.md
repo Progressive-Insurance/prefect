@@ -61,7 +61,7 @@ Prefect support for Python 3.9 is experimental and extras are not expected to wo
 Prefect includes an open-source server and UI for orchestrating and managing flows. The local server stores flow metadata in a Postgres database and exposes a GraphQL API. The local server requires [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/install/) to be installed. If you have [Docker Desktop](https://www.docker.com/products/docker-desktop) on your machine, you've got both of these.
 
 ::: tip Prefect Cloud
-Once you are ready to deploy into production, you can use [Prefect Cloud](https://www.prefect.io/cloud) to orchestrate your workflows. 
+Once you are ready to deploy into production, you can use [Prefect Cloud](https://www.prefect.io/cloud) to orchestrate your workflows.
 :::
 
 Before running the server for the first time, run:
@@ -70,7 +70,7 @@ Before running the server for the first time, run:
 prefect backend server
 ```
 
-This configures Prefect for local orchestration, and saves the configuration in your local `~/.prefect` directory. 
+This configures Prefect for local orchestration, and saves the configuration in your local `~/.prefect` directory.
 
 Next, to start the server, UI, and all required infrastructure, run:
 

@@ -1,9 +1,17 @@
 from warnings import warn
 from prefect import config
+<<<<<<< HEAD
 import prefect.executors
 import prefect.engine.state
 import prefect.engine.signals
 import prefect.engine.result
+=======
+import prefect.engine.executors
+import prefect.engine.state
+import prefect.engine.signals
+import prefect.engine.result
+import prefect.engine.result_handlers
+>>>>>>> prefect clone
 from prefect.engine.flow_runner import FlowRunner
 from prefect.engine.task_runner import TaskRunner
 import prefect.engine.cloud
@@ -25,9 +33,15 @@ def get_default_executor_class() -> type:
         except ValueError:
             warn(
                 "Could not import {}; using "
+<<<<<<< HEAD
                 "prefect.executors.LocalExecutor instead.".format(config_value)
             )
             return prefect.executors.LocalExecutor
+=======
+                "prefect.engine.executors.LocalExecutor instead.".format(config_value)
+            )
+            return prefect.engine.executors.LocalExecutor
+>>>>>>> prefect clone
     else:
         return config_value
 

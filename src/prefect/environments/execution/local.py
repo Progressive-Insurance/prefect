@@ -11,10 +11,13 @@ class LocalEnvironment(Environment, _RunMixin):
     """
     A LocalEnvironment class for executing a flow in the local process.
 
+<<<<<<< HEAD
     DEPRECATED: Environment based configuration is deprecated, please transition to
     configuring `flow.run_config` instead of `flow.environment`. See
     https://docs.prefect.io/orchestration/flow_config/overview.html for more info.
 
+=======
+>>>>>>> prefect clone
     Args:
         - executor (Executor, optional): the executor to run the flow with. If not provided, the
             default executor will be used.
@@ -30,7 +33,11 @@ class LocalEnvironment(Environment, _RunMixin):
 
     def __init__(
         self,
+<<<<<<< HEAD
         executor: "prefect.executors.Executor" = None,
+=======
+        executor: "prefect.engine.executors.Executor" = None,
+>>>>>>> prefect clone
         labels: Iterable[str] = None,
         on_start: Callable = None,
         on_exit: Callable = None,
@@ -38,7 +45,11 @@ class LocalEnvironment(Environment, _RunMixin):
     ) -> None:
         if executor is None:
             executor = prefect.engine.get_default_executor_class()()
+<<<<<<< HEAD
         elif not isinstance(executor, prefect.executors.Executor):
+=======
+        elif not isinstance(executor, prefect.engine.executors.Executor):
+>>>>>>> prefect clone
             raise TypeError(
                 f"`executor` must be an `Executor` or `None`, got `{executor}`"
             )
